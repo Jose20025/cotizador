@@ -1,5 +1,5 @@
 name: cotizador
-description: A new Flutter project.
+description: Una herramienta para ayudar a los aserores de ventas de lotes.
 publish_to: 'none'
 version: 0.1.0
 
@@ -17,3 +17,24 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
+          weight: 700
+
+    - family: Open Sans
+      fonts:
+        - asset: assets/fonts/opensans/OpenSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/opensans/OpenSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/opensans/OpenSans-Light.ttf
+          weight: 300
