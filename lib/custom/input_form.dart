@@ -4,7 +4,7 @@ class InputForm extends StatelessWidget {
   final double width;
   final String label;
   final bool validate;
-  final int? initialValue;
+  final double? initialValue;
   // final String? Function(String?)? validator;
   final int? maxLength;
   final TextInputType? type;
@@ -49,7 +49,7 @@ class InputForm extends StatelessWidget {
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(25))),
         ),
-        onSaved: validate ? onSave : null,
+        onSaved: onSave,
       ),
     );
   }
