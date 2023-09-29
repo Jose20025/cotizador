@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class InputForm extends StatelessWidget {
   final double width;
   final String label;
+  final int? maxLength;
   final TextInputType? type;
 
   const InputForm({
     super.key,
     this.type,
+    this.maxLength,
     required this.width,
     required this.label,
   });
@@ -17,7 +19,7 @@ class InputForm extends StatelessWidget {
     return SizedBox(
       width: width,
       child: TextFormField(
-        maxLength: 10,
+        maxLength: maxLength ?? 10,
         keyboardType: type ?? type,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 15),
