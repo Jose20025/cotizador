@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           fontFamily: 'Open Sans',
           colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.lightGreen,
+            seedColor: Colors.green,
             brightness: Brightness.dark,
           )),
-      title: 'Cotizador',
+      title: 'Cotizador de Cuotas',
       home: const HomePage(),
     );
   }
