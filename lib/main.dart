@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Open Sans',
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.green,
-            brightness: Brightness.dark,
+            // brightness: Brightness.dark,
           )),
       title: 'Cotizador de Cuotas',
       home: const HomePage(),
