@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class InputForm extends StatelessWidget {
   final double width;
   final String label;
+  final bool validate;
   final int? initialValue;
   // final String? Function(String?)? validator;
   final int? maxLength;
@@ -15,6 +16,7 @@ class InputForm extends StatelessWidget {
     this.maxLength,
     this.initialValue,
     this.onSave,
+    required this.validate,
     required this.width,
     required this.label,
   });
@@ -24,13 +26,15 @@ class InputForm extends StatelessWidget {
     return SizedBox(
       width: width,
       child: TextFormField(
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Obligatorio';
-          }
+        validator: validate
+            ? (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Obligatorio';
+                }
 
-          return null;
-        },
+                return null;
+              }
+            : null,
         maxLength: maxLength ?? 10,
         keyboardType: type ?? type,
         initialValue: initialValue != null ? initialValue.toString() : '',
@@ -45,7 +49,7 @@ class InputForm extends StatelessWidget {
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(25))),
         ),
-        onSaved: onSave,
+        onSaved: validate ? onSave : null,
       ),
     );
   }
