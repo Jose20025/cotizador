@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:cotizador/custom/borrar_historial_boton.dart';
 import 'package:cotizador/custom/input_form.dart';
 import 'package:cotizador/models/cotizacion.dart';
 import 'package:cotizador/views/cotizacion_page.dart';
