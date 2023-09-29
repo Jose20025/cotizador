@@ -1,3 +1,4 @@
+import 'package:cotizador/custom/input_form.dart';
 import 'package:cotizador/models/cotizacion.dart';
 import 'package:cotizador/views/historial_page.dart';
 import 'package:flutter/material.dart';
@@ -39,17 +40,70 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
+            SizedBox(
+              height: 50,
+              width: 300,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => HistorialPage(
                         cotizaciones: cotizaciones,
                       ),
-                    ));
-              },
-              child: const Text('Historial de Cotizaciones'),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Historial de Cotizaciones',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 25),
+            const Divider(),
+            const SizedBox(height: 10),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InputForm(
+                  label: 'Monto Total \$',
+                  width: 150,
+                  type: TextInputType.number,
+                ),
+                InputForm(
+                  label: 'Cuota Inicial \$',
+                  width: 150,
+                  type: TextInputType.number,
+                ),
+              ],
+            ),
+            const SizedBox(height: 25),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                InputForm(
+                  width: 150,
+                  label: 'Interés Anual %',
+                  type: TextInputType.number,
+                ),
+                InputForm(width: 150, label: 'Tiempo (años)'),
+              ],
+            ),
+            const SizedBox(height: 25),
+            SizedBox(
+              height: 50,
+              width: 300,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text(
+                  'Cotizar',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              ),
             )
           ],
         ),
