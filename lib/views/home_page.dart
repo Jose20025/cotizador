@@ -39,6 +39,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           children: [
+            const Divider(),
             const SizedBox(height: 10),
             SizedBox(
               height: 50,
@@ -63,9 +64,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 25),
-            const Divider(),
             const SizedBox(height: 10),
+            const Divider(),
+            const SizedBox(height: 25),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
