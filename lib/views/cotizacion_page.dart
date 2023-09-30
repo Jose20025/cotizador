@@ -58,6 +58,12 @@ class CotizacionPage extends StatelessWidget {
                     '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${cotizacion.tiempo > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${(cotizacion.tiempo * 24) > 1 ? "meses" : "mes"}',
               ),
               CustomCard(
+                title: 'Mantenimiento',
+                subtitle:
+                    NumberFormat.currency().format(cotizacion.mantenimiento),
+                icon: Icons.monetization_on_outlined,
+              ),
+              CustomCard(
                 icon: Icons.monetization_on_outlined,
                 title: 'Importe de Cuota',
                 subtitle:
