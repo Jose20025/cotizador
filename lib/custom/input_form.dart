@@ -36,10 +36,10 @@ class InputForm extends StatelessWidget {
               }
             : null,
         maxLength: maxLength ?? 10,
-        keyboardType: type ?? type,
+        keyboardType: type ?? TextInputType.text,
         initialValue: initialValue != null ? initialValue.toString() : '',
         textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 15),
+        style: const TextStyle(fontSize: 18),
         decoration: InputDecoration(
           label: Center(
             child: Text(label),
