@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:cotizador/custom/input_form.dart';
-import 'package:cotizador/models/cotizacion.dart';
-import 'package:cotizador/views/cotizacion_page.dart';
-import 'package:cotizador/views/historial_page.dart';
+import '../custom/input_form.dart';
+import '../models/cotizacion.dart';
+import 'cotizacion_page.dart';
+import 'historial_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
 
   double obtenerCuotas(
       double montoTotal, double interes, double tiempo, double? cuotaInicial) {
-    double interesMes = interes / 12;
+    double interesMes = interes / 100 / 12;
     double tiempoMes = tiempo * 12;
     double montoCuotas;
 
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                           width: 150,
                           label: 'Interés Anual %',
                           type: TextInputType.number,
-                          initialValue: 0.09,
+                          initialValue: 9,
                           onSave: (value) {
                             interes = double.parse(value!);
                           },

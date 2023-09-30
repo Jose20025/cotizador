@@ -1,5 +1,5 @@
-import 'package:cotizador/custom/cotizacion_tile.dart';
-import 'package:cotizador/models/cotizacion.dart';
+import '../custom/cotizacion_tile.dart';
+import '../models/cotizacion.dart';
 import 'package:flutter/material.dart';
 
 class HistorialPage extends StatelessWidget {

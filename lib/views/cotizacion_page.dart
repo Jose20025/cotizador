@@ -48,7 +48,7 @@ class CotizacionPage extends StatelessWidget {
                 icon: Icons.percent,
                 title: 'Tasa de Interes',
                 subtitle:
-                    '${NumberFormat.decimalPatternDigits().format(cotizacion.interes * 100)}% Anual | ${NumberFormat.decimalPatternDigits().format(cotizacion.interes * 100 / 12)}% Mensual',
+                    '${NumberFormat.decimalPatternDigits().format(cotizacion.interes)}% Anual | ${NumberFormat.decimalPatternDigits().format(cotizacion.interes / 12)}% Mensual',
               )
             ],
           ),
