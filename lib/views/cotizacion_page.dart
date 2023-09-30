@@ -21,6 +21,20 @@ class CotizacionPage extends StatelessWidget {
           child: Column(
             children: [
               CustomCard(
+                title: 'Superficie del Lote',
+                subtitle:
+                    '${NumberFormat.decimalPatternDigits().format(cotizacion.superficie)} m²',
+                icon: Icons.monetization_on_outlined,
+                color: Colors.greenAccent.withOpacity(0.5),
+              ),
+              CustomCard(
+                icon: Icons.monetization_on_outlined,
+                title: 'Precio por m²',
+                subtitle: NumberFormat.currency()
+                    .format(cotizacion.precioMetroCuadrado),
+                color: Colors.greenAccent.withOpacity(0.5),
+              ),
+              CustomCard(
                 title: 'Monto Total',
                 subtitle: NumberFormat.currency().format(cotizacion.montoTotal),
                 icon: Icons.monetization_on_outlined,
@@ -33,23 +47,23 @@ class CotizacionPage extends StatelessWidget {
                       icon: Icons.monetization_on_outlined)
                   : const SizedBox(),
               CustomCard(
+                icon: Icons.monetization_on_outlined,
+                title: 'Monto a Pagar',
+                subtitle: NumberFormat.currency().format(cotizacion.montoPagar),
+              ),
+              CustomCard(
                 icon: Icons.access_alarm_outlined,
                 title: 'Tiempo',
                 subtitle:
-                    '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${cotizacion.tiempo > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo * 12)} ${(cotizacion.tiempo * 24) > 1 ? "meses" : "mes"}',
+                    '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${cotizacion.tiempo > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${(cotizacion.tiempo * 24) > 1 ? "meses" : "mes"}',
               ),
               CustomCard(
                 icon: Icons.monetization_on_outlined,
                 title: 'Importe de Cuota',
                 subtitle:
-                    NumberFormat.currency().format(cotizacion.montoCuotas),
+                    NumberFormat.currency().format(cotizacion.importeCuotas),
+                color: Colors.greenAccent.withOpacity(0.5),
               ),
-              CustomCard(
-                icon: Icons.percent,
-                title: 'Tasa de Interes',
-                subtitle:
-                    '${NumberFormat.decimalPatternDigits().format(cotizacion.interes)}% Anual | ${NumberFormat.decimalPatternDigits().format(cotizacion.interes / 12)}% Mensual',
-              )
             ],
           ),
         ),

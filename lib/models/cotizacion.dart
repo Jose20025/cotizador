@@ -1,31 +1,44 @@
 class Cotizacion {
-  double interes;
+  double superficie;
+  double precioMetroCuadrado;
+  double? montoTotal;
   double? cuotaInicial;
-  double montoTotal;
-  double tiempo;
-  double montoCuotas;
+  double? mantenimiento;
+  int tiempo;
+  double? importeCuotas;
+  double? montoPagar;
 
   Cotizacion(
-      {required this.interes,
+      {required this.superficie,
+      required this.precioMetroCuadrado,
+      required this.tiempo,
+      this.montoTotal,
+      this.mantenimiento,
       this.cuotaInicial,
-      required this.montoTotal,
-      required this.montoCuotas,
-      required this.tiempo});
+      this.importeCuotas,
+      this.montoPagar});
 
   factory Cotizacion.fromJson(Map<String, dynamic> json) {
     return Cotizacion(
-        interes: json['interes'],
-        montoTotal: json['montoTotal'],
-        montoCuotas: json['montoCuotas'],
-        tiempo: json['tiempo'],
-        cuotaInicial: json['cuotaInicial']);
+      superficie: json['superficie'],
+      precioMetroCuadrado: json['precioMetroCuadrado'],
+      montoTotal: json['montoTotal'],
+      tiempo: json['tiempo'],
+      cuotaInicial: json['cuotaInicial'],
+      mantenimiento: json['mantenimiento'],
+      importeCuotas: json['importeCuotas'],
+      montoPagar: json['montoPagar'],
+    );
   }
 
   Map<String, dynamic> toJson() => {
-        'montoTotal': montoTotal,
-        'interes': interes,
+        'superficie': superficie,
+        'precioMetroCuadrado': precioMetroCuadrado,
         'cuotaInicial': cuotaInicial,
         'tiempo': tiempo,
-        'montoCuotas': montoCuotas,
+        'importeCuotas': importeCuotas,
+        'mantenimiento': mantenimiento,
+        'montoTotal': montoTotal,
+        'montoPagar': montoPagar,
       };
 }

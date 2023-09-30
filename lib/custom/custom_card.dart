@@ -3,15 +3,21 @@ import 'package:flutter/material.dart';
 class CustomCard extends StatelessWidget {
   final String title;
   final String? subtitle;
+  final Color? color;
   final IconData icon;
   const CustomCard(
-      {super.key, required this.icon, required this.title, this.subtitle});
+      {super.key,
+      required this.icon,
+      required this.title,
+      this.color,
+      this.subtitle});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Card(
+        color: color,
         child: ListTile(
           title: Text(title),
           leading: Icon(icon),

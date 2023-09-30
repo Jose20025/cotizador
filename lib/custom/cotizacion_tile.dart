@@ -18,15 +18,15 @@ class CotizacionCard extends StatelessWidget {
               subtitle: Column(
                 children: [
                   Text(
-                      'Cuota: ${NumberFormat.currency().format(cotizacion.montoCuotas)}/mes'),
+                      'Importe de Cuotas: ${NumberFormat.currency().format(cotizacion.importeCuotas)}/mes'),
                   Text(
-                      'Interés: ${NumberFormat.decimalPatternDigits().format(cotizacion.interes)}%'),
+                      'Precio por m²: ${NumberFormat.currency().format(cotizacion.precioMetroCuadrado)}'),
                   cotizacion.cuotaInicial == null
                       ? const SizedBox()
                       : Text(
                           'Cuota Inicial: ${NumberFormat.currency().format(cotizacion.cuotaInicial)}'),
                   Text(
-                      'Tiempo: ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${cotizacion.tiempo > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo * 12)} ${(cotizacion.tiempo * 24) > 1 ? "meses" : "mes"}'),
+                      'Tiempo: ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${cotizacion.tiempo > 1 ? "meses" : "mes"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${(cotizacion.tiempo / 12) > 1 ? "años" : "año"}'),
                 ],
               )),
         ),

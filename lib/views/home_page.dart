@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import '../custom/input_form.dart';
 import '../models/cotizacion.dart';
@@ -51,26 +50,52 @@ class _HomePageState extends State<HomePage> {
     await prefs.setString('historial', cotizacionesJson);
   }
 
+  void cotizar(Cotizacion cotizacion) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CotizacionPage(cotizacion: cotizacion),
+      ),
+    );
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  double? montoTotal;
-  double? interes;
+  double? precioMetroCuadrado;
+  double? superficie;
   double? cuotaInicial;
-  double? tiempo;
+  int? tiempo;
 
-  double obtenerCuotas(
-      double montoTotal, double interes, double tiempo, double? cuotaInicial) {
-    double interesMes = interes / 100 / 12;
-    double tiempoMes = tiempo * 12;
-    double montoCuotas;
+  Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
+      double? cuotaInicial, int tiempo) {
+    final montoTotal = superficie * precioMetroCuadrado;
 
-    if (cuotaInicial != null) {
-      montoTotal -= cuotaInicial;
-    }
+    final montoTotalSinInicial =
+        cuotaInicial != null ? (montoTotal - cuotaInicial) : null;
 
-    montoCuotas =
-        (montoTotal * interesMes) / ((1 - pow(1 + interesMes, -tiempoMes)));
+    final mantenimiento = cuotaInicial != null
+        ? obtenerMontoMantenimiento(montoTotalSinInicial!)
+        : obtenerMontoMantenimiento(montoTotal);
 
-    return montoCuotas;
+    final montoPagar = cuotaInicial != null
+        ? (montoTotalSinInicial! + mantenimiento)
+        : (montoTotal + mantenimiento);
+
+    final importeCuotas = montoPagar / tiempo;
+
+    return Cotizacion(
+      superficie: superficie,
+      precioMetroCuadrado: precioMetroCuadrado,
+      tiempo: tiempo,
+      cuotaInicial: cuotaInicial,
+      importeCuotas: importeCuotas,
+      mantenimiento: mantenimiento,
+      montoPagar: montoPagar,
+      montoTotal: montoTotal,
+    );
+  }
+
+  double obtenerMontoMantenimiento(double monto) {
+    return monto * 8 / 100 * 10;
   }
 
   void buttonPress() {
@@ -115,101 +140,89 @@ class _HomePageState extends State<HomePage> {
             const Divider(),
             const SizedBox(height: 25),
             Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        InputForm(
-                          label: 'Monto Total \$',
-                          width: 150,
-                          type: TextInputType.number,
-                          onSave: (value) {
-                            montoTotal = double.parse(value!);
-                          },
-                          validate: true,
-                        ),
-                        InputForm(
-                          label: 'Cuota Inicial \$',
-                          width: 150,
-                          type: TextInputType.number,
-                          onSave: (value) {
-                            cuotaInicial =
-                                value!.isEmpty ? null : double.parse(value);
-                          },
-                          validate: false,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 25),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        InputForm(
-                          width: 150,
-                          label: 'Interés Anual %',
-                          type: TextInputType.number,
-                          initialValue: 9,
-                          onSave: (value) {
-                            interes = double.parse(value!);
-                          },
-                          validate: true,
-                        ),
-                        InputForm(
-                          width: 150,
-                          label: 'Tiempo (años)',
-                          type: TextInputType.number,
-                          onSave: (value) {
-                            tiempo = double.parse(value!);
-                          },
-                          validate: true,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 25),
-                    SizedBox(
-                      height: 50,
-                      width: 300,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            _formKey.currentState!.reset();
-                            FocusScope.of(context).unfocus();
-
-                            final cuotas = obtenerCuotas(
-                                montoTotal!, interes!, tiempo!, cuotaInicial);
-
-                            final Cotizacion cotizacionActual = Cotizacion(
-                                interes: interes!,
-                                montoTotal: montoTotal!,
-                                montoCuotas: cuotas,
-                                cuotaInicial: cuotaInicial,
-                                tiempo: tiempo!);
-
-                            cotizaciones.add(cotizacionActual);
-
-                            guardarCotizaciones();
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CotizacionPage(
-                                    cotizacion: cotizacionActual),
-                              ),
-                            );
-                          }
+              key: _formKey,
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InputForm(
+                        validate: true,
+                        width: 150,
+                        label: 'Precio de m²',
+                        type: TextInputType.number,
+                        onSave: (value) {
+                          precioMetroCuadrado = double.parse(value!);
                         },
-                        child: const Text(
-                          'Cotizar',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
                       ),
-                    )
-                  ],
-                ))
+                      InputForm(
+                        validate: true,
+                        width: 180,
+                        label: 'Superficie de Lote (m²)',
+                        type: TextInputType.number,
+                        onSave: (value) {
+                          superficie = double.parse(value!);
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const SizedBox(width: 20),
+                      InputForm(
+                        validate: false,
+                        width: 150,
+                        label: 'Cuota Inicial',
+                        type: TextInputType.number,
+                        onSave: (value) {
+                          cuotaInicial =
+                              value != null ? double.parse(value) : null;
+                        },
+                      ),
+                      const SizedBox(width: 38),
+                      InputForm(
+                        validate: true,
+                        width: 150,
+                        label: 'Tiempo (meses)',
+                        type: TextInputType.number,
+                        onSave: (value) {
+                          tiempo = int.parse(value!);
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  SizedBox(
+                    height: 50,
+                    width: 300,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          _formKey.currentState!.reset();
+                          FocusScope.of(context).unfocus();
+
+                          final cotizacion = crearCotizacion(
+                            precioMetroCuadrado!,
+                            superficie!,
+                            cuotaInicial,
+                            tiempo!,
+                          );
+
+                          cotizar(cotizacion);
+                        }
+                      },
+                      child: const Text(
+                        'Cotizar',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),
