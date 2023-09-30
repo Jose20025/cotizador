@@ -48,7 +48,7 @@ class InputForm extends StatelessWidget {
           counter: const Offstage(),
           filled: true,
           border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25))),
+              borderRadius: BorderRadius.all(Radius.circular(15))),
         ),
         onSaved: onSave,
       ),
