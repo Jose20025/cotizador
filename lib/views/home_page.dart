@@ -210,6 +210,10 @@ class _HomePageState extends State<HomePage> {
                             tiempo!,
                           );
 
+                          cotizaciones.add(cotizacion);
+
+                          guardarCotizaciones();
+
                           cotizar(cotizacion);
                         }
                       },
