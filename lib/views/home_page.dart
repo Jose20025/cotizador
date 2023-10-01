@@ -64,9 +64,10 @@ class _HomePageState extends State<HomePage> {
   double? superficie;
   double? cuotaInicial;
   int? tiempo;
+  String? referencia;
 
   Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
-      double? cuotaInicial, int tiempo) {
+      double? cuotaInicial, int tiempo, String referencia) {
     final montoTotal = superficie * precioMetroCuadrado;
 
     final montoTotalSinInicial =
@@ -86,6 +87,7 @@ class _HomePageState extends State<HomePage> {
       superficie: superficie,
       precioMetroCuadrado: precioMetroCuadrado,
       tiempo: tiempo,
+      referencia: referencia,
       cuotaInicial: cuotaInicial,
       importeCuotas: importeCuotas,
       mantenimiento: mantenimiento,
@@ -138,11 +140,21 @@ class _HomePageState extends State<HomePage> {
             ),
             const SizedBox(height: 10),
             const Divider(),
-            const SizedBox(height: 25),
+            const SizedBox(height: 10),
             Form(
               key: _formKey,
               child: Column(
                 children: [
+                  InputForm(
+                    validate: true,
+                    maxLength: 30,
+                    width: MediaQuery.of(context).size.width - 45,
+                    label: 'Nombre de Referencia',
+                    onSave: (value) {
+                      referencia = value!;
+                    },
+                  ),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -150,6 +162,7 @@ class _HomePageState extends State<HomePage> {
                         validate: true,
                         width: 150,
                         label: 'Precio de m²',
+                        maxLength: 10,
                         type: TextInputType.number,
                         onSave: (value) {
                           precioMetroCuadrado = double.parse(value!);
@@ -157,6 +170,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       InputForm(
                         validate: true,
+                        maxLength: 10,
                         width: 180,
                         label: 'Superficie de Lote (m²)',
                         type: TextInputType.number,
@@ -204,11 +218,11 @@ class _HomePageState extends State<HomePage> {
                           FocusScope.of(context).unfocus();
 
                           final cotizacion = crearCotizacion(
-                            precioMetroCuadrado!,
-                            superficie!,
-                            cuotaInicial,
-                            tiempo!,
-                          );
+                              precioMetroCuadrado!,
+                              superficie!,
+                              cuotaInicial,
+                              tiempo!,
+                              referencia!);
 
                           cotizaciones.add(cotizacion);
 

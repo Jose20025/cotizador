@@ -35,7 +35,7 @@ class InputForm extends StatelessWidget {
                 return null;
               }
             : null,
-        maxLength: maxLength ?? 10,
+        maxLength: maxLength ?? 15,
         keyboardType: type ?? TextInputType.text,
         initialValue:
             initialValue != null ? initialValue!.toStringAsFixed(0) : '',
