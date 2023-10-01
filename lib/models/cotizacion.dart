@@ -5,6 +5,7 @@ class Cotizacion {
   double? cuotaInicial;
   double? mantenimiento;
   int tiempo;
+  String referencia;
   double? importeCuotas;
   double? montoPagar;
 
@@ -12,6 +13,7 @@ class Cotizacion {
       {required this.superficie,
       required this.precioMetroCuadrado,
       required this.tiempo,
+      required this.referencia,
       this.montoTotal,
       this.mantenimiento,
       this.cuotaInicial,
@@ -21,6 +23,7 @@ class Cotizacion {
   factory Cotizacion.fromJson(Map<String, dynamic> json) {
     return Cotizacion(
       superficie: json['superficie'],
+      referencia: json['referencia'],
       precioMetroCuadrado: json['precioMetroCuadrado'],
       montoTotal: json['montoTotal'],
       tiempo: json['tiempo'],
@@ -35,6 +38,7 @@ class Cotizacion {
         'superficie': superficie,
         'precioMetroCuadrado': precioMetroCuadrado,
         'cuotaInicial': cuotaInicial,
+        'referencia': referencia,
         'tiempo': tiempo,
         'importeCuotas': importeCuotas,
         'mantenimiento': mantenimiento,
