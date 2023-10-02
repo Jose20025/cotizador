@@ -242,9 +242,9 @@ class _HomePageState extends State<HomePage> {
                               tiempo!,
                               referencia!);
 
-                          // cotizaciones.add(cotizacionAGuardar);
+                          cotizaciones.add(cotizacionAGuardar);
 
-                          // guardarCotizaciones();
+                          guardarCotizaciones();
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
