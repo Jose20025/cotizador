@@ -25,14 +25,12 @@ class CotizacionPage extends StatelessWidget {
                 subtitle:
                     '${NumberFormat.decimalPatternDigits().format(cotizacion.superficie)} m²',
                 icon: Icons.monetization_on_outlined,
-                color: Colors.greenAccent.withOpacity(0.5),
               ),
               CustomCard(
                 icon: Icons.monetization_on_outlined,
                 title: 'Precio por m²',
                 subtitle: NumberFormat.currency()
                     .format(cotizacion.precioMetroCuadrado),
-                color: Colors.greenAccent.withOpacity(0.5),
               ),
               CustomCard(
                 title: 'Monto Total',
@@ -68,7 +66,6 @@ class CotizacionPage extends StatelessWidget {
                 title: 'Importe de Cuota',
                 subtitle:
                     NumberFormat.currency().format(cotizacion.importeCuotas),
-                color: Colors.greenAccent.withOpacity(0.5),
               ),
             ],
           ),

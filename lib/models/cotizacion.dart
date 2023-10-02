@@ -5,6 +5,7 @@ class Cotizacion {
   double? cuotaInicial;
   double? mantenimiento;
   int tiempo;
+  DateTime? fecha;
   String referencia;
   double? importeCuotas;
   double? montoPagar;
@@ -16,6 +17,7 @@ class Cotizacion {
       required this.referencia,
       this.montoTotal,
       this.mantenimiento,
+      this.fecha,
       this.cuotaInicial,
       this.importeCuotas,
       this.montoPagar});
@@ -25,6 +27,7 @@ class Cotizacion {
       superficie: json['superficie'],
       referencia: json['referencia'],
       precioMetroCuadrado: json['precioMetroCuadrado'],
+      fecha: json['fecha'],
       montoTotal: json['montoTotal'],
       tiempo: json['tiempo'],
       cuotaInicial: json['cuotaInicial'],
@@ -42,6 +45,7 @@ class Cotizacion {
         'tiempo': tiempo,
         'importeCuotas': importeCuotas,
         'mantenimiento': mantenimiento,
+        'fecha': fecha,
         'montoTotal': montoTotal,
         'montoPagar': montoPagar,
       };
