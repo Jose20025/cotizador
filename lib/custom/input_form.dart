@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class InputForm extends StatelessWidget {
   final double width;
   final String label;
+  final TextCapitalization? textCapitalization;
   final bool validate;
   final double? initialValue;
   // final String? Function(String?)? validator;
@@ -16,6 +17,7 @@ class InputForm extends StatelessWidget {
     this.maxLength,
     this.initialValue,
     this.onSave,
+    this.textCapitalization,
     required this.validate,
     required this.width,
     required this.label,
@@ -37,19 +39,16 @@ class InputForm extends StatelessWidget {
             : null,
         maxLength: maxLength ?? 15,
         keyboardType: type ?? TextInputType.text,
+        textCapitalization: textCapitalization ?? TextCapitalization.none,
         initialValue:
             initialValue != null ? initialValue!.toStringAsFixed(0) : '',
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 18),
         decoration: InputDecoration(
-          label: Center(
-            child: Text(label),
-          ),
-          counter: const Offstage(),
-          filled: true,
-          border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-        ),
+            hintText: label,
+            counter: const SizedBox(),
+            filled: true,
+            border: const OutlineInputBorder()),
         onSaved: onSave,
       ),
     );
