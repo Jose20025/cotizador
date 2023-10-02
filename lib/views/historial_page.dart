@@ -28,8 +28,8 @@ class _HistorialPageState extends State<HistorialPage> {
       ),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            setState(() {
-              widget.eliminarHistorial();
+            setState(()async {
+              await widget.eliminarHistorial();
               widget.cotizaciones.clear();
             });
           },
