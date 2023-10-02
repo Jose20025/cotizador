@@ -5,7 +5,7 @@ class Cotizacion {
   double? cuotaInicial;
   double? mantenimiento;
   int tiempo;
-  DateTime? fecha;
+  String? fecha;
   String referencia;
   double? importeCuotas;
   double? montoPagar;
