@@ -69,6 +69,36 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Eliminar Historial
+  void elimiarHistorial() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: const Text('¿Estás seguro de querer borrar el historial?'),
+        title: const Text("Confirmación"),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("No"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                cotizaciones.clear();
+                guardarCotizaciones();
+              });
+              Navigator.of(context).pop();
+            },
+            child: const Text("Si"),
+          ),
+        ],
+      ),
+    );
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   double? precioMetroCuadrado;
   double? superficie;
@@ -93,6 +123,8 @@ class _HomePageState extends State<HomePage> {
 
     final importeCuotas = montoPagar / tiempo;
 
+    final fechaHoy = DateTime.now();
+
     return Cotizacion(
       superficie: superficie,
       precioMetroCuadrado: precioMetroCuadrado,
@@ -103,7 +135,7 @@ class _HomePageState extends State<HomePage> {
       mantenimiento: mantenimiento,
       montoPagar: montoPagar,
       montoTotal: montoTotal,
-      fecha: DateTime.now(),
+      fecha: '${fechaHoy.day}-${fechaHoy.month}-${fechaHoy.year}',
     );
   }
 
@@ -117,6 +149,7 @@ class _HomePageState extends State<HomePage> {
       MaterialPageRoute(
         builder: (context) => HistorialPage(
           cotizaciones: cotizaciones.reversed.toList(),
+          eliminarHistorial: elimiarHistorial,
         ),
       ),
     );
