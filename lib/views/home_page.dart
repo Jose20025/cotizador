@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import '../custom/input_form.dart';
 import '../models/cotizacion.dart';
-import 'cotizacion_page.dart';
+import 'cotizacion_asesor_page.dart';
+import 'cotizacion_cliente_page.dart';
 import 'historial_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,11 +51,20 @@ class _HomePageState extends State<HomePage> {
     await prefs.setString('historial', cotizacionesJson);
   }
 
-  void cotizar(Cotizacion cotizacion) {
+  void cotizarCliente(Cotizacion cotizacion) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CotizacionPage(cotizacion: cotizacion),
+        builder: (context) => CotizacionClientePage(cotizacion: cotizacion),
+      ),
+    );
+  }
+
+  void cotizarAsesor(Cotizacion cotizacion) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CotizacionAsesorPage(cotizacion: cotizacion),
       ),
     );
   }
@@ -93,6 +103,7 @@ class _HomePageState extends State<HomePage> {
       mantenimiento: mantenimiento,
       montoPagar: montoPagar,
       montoTotal: montoTotal,
+      fecha: DateTime.now(),
     );
   }
 
@@ -246,25 +257,7 @@ class _HomePageState extends State<HomePage> {
 
                           guardarCotizaciones();
 
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Center(
-                                child: Text(
-                                  'Se ha guardado la cotización con éxito',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                              duration: Duration(seconds: 3),
-                              backgroundColor: Colors.green,
-                              elevation: 0,
-                              padding: EdgeInsets.all(20),
-                              behavior: SnackBarBehavior.fixed,
-                            ),
-                          );
+                          showConfirmation(context);
                         }
                       },
                       style: const ButtonStyle(
@@ -289,6 +282,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void showConfirmation(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Center(
+          child: Text(
+            'Se ha guardado la cotización con éxito en el historial',
+            style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        duration: Duration(seconds: 3),
+        backgroundColor: Colors.green,
+        elevation: 0,
+        padding: EdgeInsets.all(20),
+        behavior: SnackBarBehavior.fixed,
+      ),
+    );
+  }
+
   SizedBox botonCotizarAsesor(BuildContext context) {
     return SizedBox(
       height: 70,
@@ -307,7 +322,7 @@ class _HomePageState extends State<HomePage> {
             final cotizacion = crearCotizacion(precioMetroCuadrado!,
                 superficie!, cuotaInicial, tiempo!, referencia!);
 
-            cotizar(cotizacion);
+            cotizarAsesor(cotizacion);
           }
         },
         child: Text(
@@ -340,14 +355,15 @@ class _HomePageState extends State<HomePage> {
             final cotizacion = crearCotizacion(precioMetroCuadrado!,
                 superficie!, cuotaInicial, tiempo!, referencia!);
 
-            cotizar(cotizacion);
+            cotizarCliente(cotizacion);
           }
         },
-        child: const Text(
-          'Cotizar a Cliente',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
+        child: const Text('Cotizar a Cliente',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white)),
       ),
     );
   }
