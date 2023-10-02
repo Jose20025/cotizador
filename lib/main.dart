@@ -1,3 +1,5 @@
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Intl.defaultLocale = 'es_ES';
+    initializeDateFormatting('es_ES', null);
     numberFormatSymbols['es_ES'] = const NumberSymbols(
         NAME: "es_ES",
         DECIMAL_SEP: ',',

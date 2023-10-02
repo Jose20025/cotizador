@@ -25,10 +25,10 @@ class CotizacionCard extends StatelessWidget {
                     children: [
                       Card(
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(10),
                           child: Center(
                               child: Text(
-                            cotizacion.fecha!,
+                            DateFormat('dd/MMM/yyyy').format(cotizacion.fecha!),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           )),
                         ),
@@ -65,7 +65,7 @@ class CotizacionCard extends StatelessWidget {
                   MiniCard(
                     title: 'Tiempo',
                     subtitle:
-                        '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${(cotizacion.tiempo / 12) > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${(cotizacion.tiempo * 24) > 1 ? "meses" : "mes"}',
+                        '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${(cotizacion.tiempo / 12) == 1 ? "año" : "años"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${(cotizacion.tiempo) == 1 ? "mes" : "meses"}',
                   ),
                   MiniCard(
                     title: 'Superficie del Lote',

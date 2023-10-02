@@ -70,12 +70,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Eliminar Historial
-  void elimiarHistorial() {
-    showDialog(
+  Future<void> elimiarHistorial() async {
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        content: const Text('¿Estás seguro de querer borrar el historial?'),
+        content: const Text('¿Estás seguro de borrar el historial?'),
         title: const Text("Confirmación"),
         actions: [
           ElevatedButton(
@@ -123,8 +123,6 @@ class _HomePageState extends State<HomePage> {
 
     final importeCuotas = montoPagar / tiempo;
 
-    final fechaHoy = DateTime.now();
-
     return Cotizacion(
       superficie: superficie,
       precioMetroCuadrado: precioMetroCuadrado,
@@ -135,7 +133,7 @@ class _HomePageState extends State<HomePage> {
       mantenimiento: mantenimiento,
       montoPagar: montoPagar,
       montoTotal: montoTotal,
-      fecha: '${fechaHoy.day}-${fechaHoy.month}-${fechaHoy.year}',
+      fecha: DateTime.now(),
     );
   }
 

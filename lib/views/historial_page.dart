@@ -25,27 +25,18 @@ class _HistorialPageState extends State<HistorialPage> {
           },
           icon: const Icon(Icons.arrow_back),
         ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            setState(()async {
+        actions: [
+          IconButton(
+            onPressed: () async {
               await widget.eliminarHistorial();
-              widget.cotizaciones.clear();
-            });
-          },
-          label: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(Icons.delete_forever),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Eliminar Historial",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              )
-            ],
-          )),
+              setState(() {
+                widget.cotizaciones.clear();
+              });
+            },
+            icon: const Icon(Icons.delete_forever),
+          )
+        ],
+      ),
       body: ListView.builder(
         itemBuilder: (context, index) =>
             CotizacionCard(cotizacion: widget.cotizaciones[index]),
