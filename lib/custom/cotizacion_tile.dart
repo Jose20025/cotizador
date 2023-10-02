@@ -18,12 +18,34 @@ class CotizacionCard extends StatelessWidget {
           Card(
             elevation: 4,
             child: ListTile(
-              title: Center(
-                child: Text(
-                  'Cotización para:\t\t\t\t\t\t ${cotizacion.referencia}',
-                  style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.bold),
-                ),
+              title: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                              child: Text(
+                            cotizacion.fecha!,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Center(
+                    child: Text(
+                      'Cotización para:\t\t\t\t\t\t ${cotizacion.referencia}',
+                      style: const TextStyle(
+                          fontSize: 17, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
               ),
               subtitle: Column(
                 children: [
