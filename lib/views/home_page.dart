@@ -389,12 +389,14 @@ class _HomePageState extends State<HomePage> {
             cotizarCliente(cotizacion);
           }
         },
-        child: const Text('Cotizar a Cliente',
+        child: Text('Cotizar a Cliente',
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white)),
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black)),
       ),
     );
   }

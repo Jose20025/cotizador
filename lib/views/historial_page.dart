@@ -37,11 +37,19 @@ class _HistorialPageState extends State<HistorialPage> {
           )
         ],
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) =>
-            CotizacionCard(cotizacion: widget.cotizaciones[index]),
-        itemCount: widget.cotizaciones.length,
-      ),
+      body: widget.cotizaciones.isNotEmpty
+          ? ListView.builder(
+              itemBuilder: (context, index) =>
+                  CotizacionCard(cotizacion: widget.cotizaciones[index]),
+              itemCount: widget.cotizaciones.length,
+            )
+          : const Center(
+              child: Text(
+                'No hay cotizaciones guardadas aun',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+              ),
+            ),
     );
   }
 }
