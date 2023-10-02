@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(
         builder: (context) => HistorialPage(
-          cotizaciones: cotizaciones,
+          cotizaciones: cotizaciones.reversed.toList(),
         ),
       ),
     );
@@ -115,11 +115,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Cotizador de Cuotas'),
+        title: const Text(
+          'Cotizador de Cuotas',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
+        centerTitle: true,
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             const Divider(),
@@ -128,11 +130,15 @@ class _HomePageState extends State<HomePage> {
               height: 50,
               width: 300,
               child: ElevatedButton(
+                style: const ButtonStyle(
+                    elevation: MaterialStatePropertyAll(9),
+                    shadowColor: MaterialStatePropertyAll(Colors.transparent)),
                 onPressed: buttonPress,
                 child: const Text(
                   'Historial de Cotizaciones',
                   style: TextStyle(
                     fontSize: 18,
+                    // color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -150,14 +156,15 @@ class _HomePageState extends State<HomePage> {
                     maxLength: 30,
                     width: MediaQuery.of(context).size.width - 45,
                     label: 'Nombre de Referencia',
+                    textCapitalization: TextCapitalization.words,
                     onSave: (value) {
                       referencia = value!;
                     },
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+                      const SizedBox(width: 20),
                       InputForm(
                         validate: true,
                         width: 150,
@@ -168,6 +175,7 @@ class _HomePageState extends State<HomePage> {
                           precioMetroCuadrado = double.parse(value!);
                         },
                       ),
+                      const SizedBox(width: 20),
                       InputForm(
                         validate: true,
                         maxLength: 10,
@@ -191,10 +199,10 @@ class _HomePageState extends State<HomePage> {
                         type: TextInputType.number,
                         onSave: (value) {
                           cuotaInicial =
-                              value != null ? double.parse(value) : null;
+                              value!.isNotEmpty ? double.parse(value) : null;
                         },
                       ),
-                      const SizedBox(width: 38),
+                      const SizedBox(width: 50),
                       InputForm(
                         validate: true,
                         width: 150,
@@ -207,9 +215,19 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      botonCotizarCliente(context),
+                      botonCotizarAsesor(context),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  const Divider(),
+                  const SizedBox(height: 15),
                   SizedBox(
+                    width: MediaQuery.of(context).size.width - 30,
                     height: 50,
-                    width: 300,
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -217,24 +235,48 @@ class _HomePageState extends State<HomePage> {
                           _formKey.currentState!.reset();
                           FocusScope.of(context).unfocus();
 
-                          final cotizacion = crearCotizacion(
+                          final cotizacionAGuardar = crearCotizacion(
                               precioMetroCuadrado!,
                               superficie!,
                               cuotaInicial,
                               tiempo!,
                               referencia!);
 
-                          cotizaciones.add(cotizacion);
+                          // cotizaciones.add(cotizacionAGuardar);
 
-                          guardarCotizaciones();
+                          // guardarCotizaciones();
 
-                          cotizar(cotizacion);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Center(
+                                child: Text(
+                                  'Se ha guardado la cotización con éxito',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              duration: Duration(seconds: 2),
+                              backgroundColor: Colors.green,
+                              elevation: 0,
+                              shape: StadiumBorder(),
+                              behavior: SnackBarBehavior.floating,
+                            ),
+                          );
                         }
                       },
+                      style: const ButtonStyle(
+                          elevation: MaterialStatePropertyAll(6),
+                          shadowColor:
+                              MaterialStatePropertyAll(Colors.transparent)),
                       child: const Text(
-                        'Cotizar',
+                        'Guardar Cotizacion',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   )
@@ -242,6 +284,69 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  SizedBox botonCotizarAsesor(BuildContext context) {
+    return SizedBox(
+      height: 70,
+      width: 170,
+      child: ElevatedButton(
+        style: const ButtonStyle(
+          elevation: MaterialStatePropertyAll(8),
+          surfaceTintColor: MaterialStatePropertyAll(Colors.red),
+          shadowColor: MaterialStatePropertyAll(Colors.transparent),
+        ),
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            _formKey.currentState!.save();
+            FocusScope.of(context).unfocus();
+
+            final cotizacion = crearCotizacion(precioMetroCuadrado!,
+                superficie!, cuotaInicial, tiempo!, referencia!);
+
+            cotizar(cotizacion);
+          }
+        },
+        child: Text(
+          'Cotizar a \nAsesor',
+          style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  SizedBox botonCotizarCliente(BuildContext context) {
+    return SizedBox(
+      height: 70,
+      width: 170,
+      child: ElevatedButton(
+        style: const ButtonStyle(
+            elevation: MaterialStatePropertyAll(8),
+            shadowColor: MaterialStatePropertyAll(Colors.transparent)),
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            _formKey.currentState!.save();
+            FocusScope.of(context).unfocus();
+
+            final cotizacion = crearCotizacion(precioMetroCuadrado!,
+                superficie!, cuotaInicial, tiempo!, referencia!);
+
+            cotizar(cotizacion);
+          }
+        },
+        child: const Text(
+          'Cotizar a Cliente',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
     );
