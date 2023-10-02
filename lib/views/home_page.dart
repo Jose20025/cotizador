@@ -258,11 +258,11 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
-                              duration: Duration(seconds: 2),
+                              duration: Duration(seconds: 3),
                               backgroundColor: Colors.green,
                               elevation: 0,
-                              shape: StadiumBorder(),
-                              behavior: SnackBarBehavior.floating,
+                              padding: EdgeInsets.all(20),
+                              behavior: SnackBarBehavior.fixed,
                             ),
                           );
                         }
