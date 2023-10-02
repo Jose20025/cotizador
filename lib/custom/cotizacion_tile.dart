@@ -28,38 +28,33 @@ class CotizacionCard extends StatelessWidget {
               subtitle: Column(
                 children: [
                   const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      MiniCard(
-                          title: 'Importe de Cuotas',
-                          subtitle: NumberFormat.currency()
-                              .format(cotizacion.importeCuotas)),
-                      MiniCard(
-                          title: 'Monto a Pagar',
-                          subtitle: NumberFormat.currency()
-                              .format(cotizacion.montoPagar))
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      MiniCard(
-                          title: 'Mantenimiento',
-                          subtitle: NumberFormat.currency()
-                              .format(cotizacion.mantenimiento)),
-                      MiniCard(
-                        title: 'Tiempo',
-                        subtitle:
-                            '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${cotizacion.tiempo > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${(cotizacion.tiempo * 24) > 1 ? "meses" : "mes"}',
-                      )
-                    ],
+                  MiniCard(
+                      title: 'Importe de Cuotas',
+                      subtitle: NumberFormat.currency()
+                          .format(cotizacion.importeCuotas)),
+                  MiniCard(
+                      title: 'Monto a Pagar',
+                      subtitle: NumberFormat.currency()
+                          .format(cotizacion.montoPagar)),
+                  MiniCard(
+                      title: 'Mantenimiento',
+                      subtitle: NumberFormat.currency()
+                          .format(cotizacion.mantenimiento)),
+                  MiniCard(
+                    title: 'Tiempo',
+                    subtitle:
+                        '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${cotizacion.tiempo > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${(cotizacion.tiempo * 24) > 1 ? "meses" : "mes"}',
                   ),
                   MiniCard(
-                    title: 'Monto Total',
+                    title: 'Superficie del Lote',
                     subtitle:
-                        NumberFormat.currency().format(cotizacion.montoTotal),
-                  )
+                        NumberFormat.currency().format(cotizacion.superficie),
+                  ),
+                  MiniCard(
+                    title: 'Precio del m²',
+                    subtitle: NumberFormat.currency()
+                        .format(cotizacion.precioMetroCuadrado),
+                  ),
                 ],
               ),
             ),
