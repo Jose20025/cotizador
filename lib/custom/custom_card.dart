@@ -19,7 +19,10 @@ class CustomCard extends StatelessWidget {
       child: Card(
         color: color,
         child: ListTile(
-          title: Text(title),
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
           leading: Icon(icon),
           subtitle: subtitle != null ? Text(subtitle!) : null,
         ),
