@@ -33,12 +33,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          useMaterial3: true,
-          fontFamily: 'Open Sans',
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.green,
-            // brightness: Brightness.dark,
-          )),
+        useMaterial3: true,
+        fontFamily: 'Open Sans',
+        colorSchemeSeed: Colors.green,
+        // brightness: Brightness.dark,
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        fontFamily: 'Open Sans',
+        colorSchemeSeed: Colors.green,
+        brightness: Brightness.dark,
+      ),
       title: 'Cotizador de Cuotas',
       home: const HomePage(),
     );
