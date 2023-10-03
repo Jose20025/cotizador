@@ -49,10 +49,6 @@ class CotizacionCard extends StatelessWidget {
               children: [
                 const Divider(),
                 MiniCard(
-                    title: 'Importe de Cuotas',
-                    subtitle: NumberFormat.currency()
-                        .format(cotizacion.importeCuotas)),
-                MiniCard(
                     title: 'Monto a Pagar',
                     subtitle:
                         NumberFormat.currency().format(cotizacion.montoPagar)),
@@ -75,6 +71,10 @@ class CotizacionCard extends StatelessWidget {
                   subtitle: NumberFormat.currency()
                       .format(cotizacion.precioMetroCuadrado),
                 ),
+                MiniCard(
+                    title: 'Importe de Cuotas',
+                    subtitle: NumberFormat.currency()
+                        .format(cotizacion.importeCuotas)),
               ],
             ),
           ),

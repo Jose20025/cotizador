@@ -21,12 +21,6 @@ class CotizacionClientePage extends StatelessWidget {
           child: Column(
             children: [
               CustomCard(
-                icon: Icons.monetization_on_outlined,
-                title: 'Importe de Cuota',
-                subtitle:
-                    NumberFormat.currency().format(cotizacion.importeCuotas),
-              ),
-              CustomCard(
                 title: 'Superficie del Lote',
                 subtitle:
                     '${NumberFormat.decimalPatternDigits().format(cotizacion.superficie)} m²',
@@ -55,6 +49,12 @@ class CotizacionClientePage extends StatelessWidget {
                 title: 'Tiempo',
                 subtitle:
                     '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${(cotizacion.tiempo / 12) > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${(cotizacion.tiempo) > 1 ? "meses" : "mes"}',
+              ),
+              CustomCard(
+                icon: Icons.monetization_on_outlined,
+                title: 'Importe de Cuota',
+                subtitle:
+                    NumberFormat.currency().format(cotizacion.importeCuotas),
               ),
             ],
           ),
