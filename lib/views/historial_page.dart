@@ -29,18 +29,16 @@ class _HistorialPageState extends State<HistorialPage> {
           IconButton(
             onPressed: () async {
               await widget.eliminarHistorial();
-              setState(() {
-                widget.cotizaciones.clear();
-              });
             },
             icon: const Icon(Icons.delete_forever),
           )
         ],
       ),
       body: widget.cotizaciones.isNotEmpty
-          ? ListView.builder(
+          ? ListView.separated(
               itemBuilder: (context, index) =>
                   CotizacionCard(cotizacion: widget.cotizaciones[index]),
+              separatorBuilder: (context, index) => const Divider(),
               itemCount: widget.cotizaciones.length,
             )
           : const Center(

@@ -91,6 +91,12 @@ class _HomePageState extends State<HomePage> {
                 guardarCotizaciones();
               });
               Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => HistorialPage(
+                    cotizaciones: cotizaciones,
+                    eliminarHistorial: elimiarHistorial),
+              ));
             },
             child: const Text("Si"),
           ),
