@@ -31,6 +31,51 @@ class _HomePageState extends State<HomePage> {
     cotizaciones = [];
   }
 
+  //* VARIABLES
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  double? precioMetroCuadrado;
+  double? superficie;
+  double? cuotaInicial;
+  int? tiempo;
+  String? referencia;
+
+  //* METODOS
+
+  Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
+      double? cuotaInicial, int tiempo, String referencia) {
+    final montoTotal = superficie * precioMetroCuadrado;
+
+    final montoTotalSinInicial =
+        cuotaInicial != null ? (montoTotal - cuotaInicial) : null;
+
+    final mantenimiento = cuotaInicial != null
+        ? obtenerMontoMantenimiento(montoTotalSinInicial!)
+        : obtenerMontoMantenimiento(montoTotal);
+
+    final montoPagar = cuotaInicial != null
+        ? (montoTotalSinInicial! + mantenimiento)
+        : (montoTotal + mantenimiento);
+
+    final importeCuotas = montoPagar / tiempo;
+
+    return Cotizacion(
+      superficie: superficie,
+      precioMetroCuadrado: precioMetroCuadrado,
+      tiempo: tiempo,
+      referencia: referencia,
+      cuotaInicial: cuotaInicial,
+      importeCuotas: importeCuotas,
+      mantenimiento: mantenimiento,
+      montoPagar: montoPagar,
+      montoTotal: montoTotal,
+      fecha: DateTime.now(),
+    );
+  }
+
+  double obtenerMontoMantenimiento(double monto) {
+    return monto * 8 / 100 * 10;
+  }
+
   void obtenerCotizaciones() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final cotizacionesJson = prefs.getString('historial');
@@ -105,60 +150,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  double? precioMetroCuadrado;
-  double? superficie;
-  double? cuotaInicial;
-  int? tiempo;
-  String? referencia;
-
-  Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
-      double? cuotaInicial, int tiempo, String referencia) {
-    final montoTotal = superficie * precioMetroCuadrado;
-
-    final montoTotalSinInicial =
-        cuotaInicial != null ? (montoTotal - cuotaInicial) : null;
-
-    final mantenimiento = cuotaInicial != null
-        ? obtenerMontoMantenimiento(montoTotalSinInicial!)
-        : obtenerMontoMantenimiento(montoTotal);
-
-    final montoPagar = cuotaInicial != null
-        ? (montoTotalSinInicial! + mantenimiento)
-        : (montoTotal + mantenimiento);
-
-    final importeCuotas = montoPagar / tiempo;
-
-    return Cotizacion(
-      superficie: superficie,
-      precioMetroCuadrado: precioMetroCuadrado,
-      tiempo: tiempo,
-      referencia: referencia,
-      cuotaInicial: cuotaInicial,
-      importeCuotas: importeCuotas,
-      mantenimiento: mantenimiento,
-      montoPagar: montoPagar,
-      montoTotal: montoTotal,
-      fecha: DateTime.now(),
-    );
-  }
-
-  double obtenerMontoMantenimiento(double monto) {
-    return monto * 8 / 100 * 10;
-  }
-
-  void buttonPress() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HistorialPage(
-          cotizaciones: cotizaciones.reversed.toList(),
-          eliminarHistorial: elimiarHistorial,
-        ),
-      ),
-    );
-  }
-
   //* BODY
 
   @override
@@ -182,7 +173,17 @@ class _HomePageState extends State<HomePage> {
               style: const ButtonStyle(
                   elevation: MaterialStatePropertyAll(9),
                   shadowColor: MaterialStatePropertyAll(Colors.transparent)),
-              onPressed: buttonPress,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HistorialPage(
+                      cotizaciones: cotizaciones.reversed.toList(),
+                      eliminarHistorial: elimiarHistorial,
+                    ),
+                  ),
+                );
+              },
               child: const Text(
                 'Historial de Cotizaciones',
                 style: TextStyle(
