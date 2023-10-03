@@ -159,161 +159,171 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //* BODY
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Cotizador de Cuotas',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-        ),
-        centerTitle: true,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Divider(),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 50,
-              width: 300,
-              child: ElevatedButton(
-                style: const ButtonStyle(
-                    elevation: MaterialStatePropertyAll(9),
-                    shadowColor: MaterialStatePropertyAll(Colors.transparent)),
-                onPressed: buttonPress,
-                child: const Text(
-                  'Historial de Cotizaciones',
-                  style: TextStyle(
-                    fontSize: 18,
-                    // color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+      appBar: appBar(),
+      body: appBody(context),
+    );
+  }
+
+  SingleChildScrollView appBody(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Divider(),
+          const SizedBox(height: 10),
+          SizedBox(
+            height: 50,
+            width: 300,
+            child: ElevatedButton(
+              style: const ButtonStyle(
+                  elevation: MaterialStatePropertyAll(9),
+                  shadowColor: MaterialStatePropertyAll(Colors.transparent)),
+              onPressed: buttonPress,
+              child: const Text(
+                'Historial de Cotizaciones',
+                style: TextStyle(
+                  fontSize: 18,
+                  // color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            const Divider(),
-            const SizedBox(height: 10),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  InputForm(
-                    validate: true,
-                    maxLength: 30,
-                    width: MediaQuery.of(context).size.width - 45,
-                    label: 'Nombre de Referencia',
-                    textCapitalization: TextCapitalization.words,
-                    onSave: (value) {
-                      referencia = value!;
-                    },
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      InputForm(
-                        validate: true,
-                        width: 150,
-                        label: 'Precio de m²',
-                        maxLength: 10,
-                        type: TextInputType.number,
-                        onSave: (value) {
-                          precioMetroCuadrado = double.parse(value!);
-                        },
-                      ),
-                      InputForm(
-                        validate: true,
-                        maxLength: 10,
-                        width: 180,
-                        label: 'Superficie de Lote (m²)',
-                        type: TextInputType.number,
-                        onSave: (value) {
-                          superficie = double.parse(value!);
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      InputForm(
-                        validate: false,
-                        width: 150,
-                        label: 'Cuota Inicial',
-                        type: TextInputType.number,
-                        onSave: (value) {
-                          cuotaInicial =
-                              value!.isNotEmpty ? double.parse(value) : null;
-                        },
-                      ),
-                      InputForm(
-                        validate: true,
-                        width: 150,
-                        label: 'Tiempo (meses)',
-                        type: TextInputType.number,
-                        onSave: (value) {
-                          tiempo = int.parse(value!);
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      botonCotizarCliente(context),
-                      botonCotizarAsesor(context),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  const Divider(),
-                  const SizedBox(height: 15),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width - 30,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          _formKey.currentState!.reset();
-                          FocusScope.of(context).unfocus();
-
-                          final cotizacionAGuardar = crearCotizacion(
-                              precioMetroCuadrado!,
-                              superficie!,
-                              cuotaInicial,
-                              tiempo!,
-                              referencia!);
-
-                          cotizaciones.add(cotizacionAGuardar);
-
-                          guardarCotizaciones();
-
-                          showConfirmation(context);
-                        }
+          ),
+          const SizedBox(height: 10),
+          const Divider(),
+          const SizedBox(height: 10),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                InputForm(
+                  validate: true,
+                  maxLength: 30,
+                  width: MediaQuery.of(context).size.width - 45,
+                  label: 'Nombre de Referencia',
+                  textCapitalization: TextCapitalization.words,
+                  onSave: (value) {
+                    referencia = value!;
+                  },
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InputForm(
+                      validate: true,
+                      width: 150,
+                      label: 'Precio de m²',
+                      maxLength: 10,
+                      type: TextInputType.number,
+                      onSave: (value) {
+                        precioMetroCuadrado = double.parse(value!);
                       },
-                      style: const ButtonStyle(
-                          elevation: MaterialStatePropertyAll(6),
-                          shadowColor:
-                              MaterialStatePropertyAll(Colors.transparent)),
-                      child: const Text(
-                        'Guardar Cotizacion',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                    InputForm(
+                      validate: true,
+                      maxLength: 10,
+                      width: 180,
+                      label: 'Superficie de Lote (m²)',
+                      type: TextInputType.number,
+                      onSave: (value) {
+                        superficie = double.parse(value!);
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InputForm(
+                      validate: false,
+                      width: 150,
+                      label: 'Cuota Inicial',
+                      type: TextInputType.number,
+                      onSave: (value) {
+                        cuotaInicial =
+                            value!.isNotEmpty ? double.parse(value) : null;
+                      },
+                    ),
+                    InputForm(
+                      validate: true,
+                      width: 150,
+                      label: 'Tiempo (meses)',
+                      type: TextInputType.number,
+                      onSave: (value) {
+                        tiempo = int.parse(value!);
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    botonCotizarCliente(context),
+                    botonCotizarAsesor(context),
+                  ],
+                ),
+                const SizedBox(height: 15),
+                const Divider(),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 30,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        _formKey.currentState!.reset();
+                        FocusScope.of(context).unfocus();
+
+                        final cotizacionAGuardar = crearCotizacion(
+                            precioMetroCuadrado!,
+                            superficie!,
+                            cuotaInicial,
+                            tiempo!,
+                            referencia!);
+
+                        cotizaciones.add(cotizacionAGuardar);
+
+                        guardarCotizaciones();
+
+                        showConfirmation(context);
+                      }
+                    },
+                    style: const ButtonStyle(
+                        elevation: MaterialStatePropertyAll(6),
+                        shadowColor:
+                            MaterialStatePropertyAll(Colors.transparent)),
+                    child: const Text(
+                      'Guardar Cotizacion',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  )
-                ],
-              ),
-            )
-          ],
-        ),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
+    );
+  }
+
+  AppBar appBar() {
+    return AppBar(
+      title: const Text(
+        'Cotizador de Cuotas',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+      ),
+      centerTitle: true,
     );
   }
 
