@@ -205,8 +205,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 10),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      const SizedBox(width: 20),
                       InputForm(
                         validate: true,
                         width: 150,
@@ -217,7 +217,6 @@ class _HomePageState extends State<HomePage> {
                           precioMetroCuadrado = double.parse(value!);
                         },
                       ),
-                      const SizedBox(width: 20),
                       InputForm(
                         validate: true,
                         maxLength: 10,
@@ -232,8 +231,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SizedBox(height: 10),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const SizedBox(width: 20),
                       InputForm(
                         validate: false,
                         width: 150,
@@ -244,7 +243,6 @@ class _HomePageState extends State<HomePage> {
                               value!.isNotEmpty ? double.parse(value) : null;
                         },
                       ),
-                      const SizedBox(width: 50),
                       InputForm(
                         validate: true,
                         width: 150,
