@@ -15,6 +15,16 @@ class CotizacionPage extends StatelessWidget {
         title: const Text('Cotización'),
         centerTitle: true,
       ),
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {},
+          tooltip: 'Exportar como PDF',
+          label: const Text(
+            'Exportar PDF',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          elevation: 5,
+          enableFeedback: true,
+          icon: const Icon(Icons.picture_as_pdf)),
       body: Center(
         child: Container(
           margin: const EdgeInsets.all(10),
