@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import '../custom/input_form.dart';
 import '../models/cotizacion.dart';
-import 'cotizacion_asesor_page.dart';
-import 'cotizacion_cliente_page.dart';
+import 'cotizacion_page.dart';
 import 'historial_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -94,24 +93,6 @@ class _HomePageState extends State<HomePage> {
     final cotizacionesJson = json.encode(cotizaciones);
 
     await prefs.setString('historial', cotizacionesJson);
-  }
-
-  void cotizarCliente(Cotizacion cotizacion) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CotizacionClientePage(cotizacion: cotizacion),
-      ),
-    );
-  }
-
-  void cotizarAsesor(Cotizacion cotizacion) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CotizacionAsesorPage(cotizacion: cotizacion),
-      ),
-    );
   }
 
   // Eliminar Historial
@@ -228,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                     InputForm(
                       validate: true,
                       maxLength: 10,
-                      width: 180,
+                      width: 170,
                       label: 'Superficie de Lote (m²)',
                       type: TextInputType.number,
                       onSave: (value) {
@@ -263,52 +244,106 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    botonCotizarCliente(context),
-                    botonCotizarAsesor(context),
-                  ],
+                SizedBox(
+                  height: 50,
+                  width: MediaQuery.of(context).size.width - 30,
+                  child: ElevatedButton(
+                    style: const ButtonStyle(
+                        elevation: MaterialStatePropertyAll(8),
+                        shadowColor:
+                            MaterialStatePropertyAll(Colors.transparent)),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        FocusScope.of(context).unfocus();
+
+                        final cotizacion = crearCotizacion(precioMetroCuadrado!,
+                            superficie!, cuotaInicial, tiempo!, referencia!);
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                CotizacionPage(cotizacion: cotizacion),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text('Cotizar',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color:
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? Colors.white
+                                    : Colors.black)),
+                  ),
                 ),
                 const SizedBox(height: 15),
                 const Divider(),
                 const SizedBox(height: 15),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 30,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        _formKey.currentState!.reset();
-                        FocusScope.of(context).unfocus();
+                Column(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 30,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            _formKey.currentState!.reset();
+                            FocusScope.of(context).unfocus();
 
-                        final cotizacionAGuardar = crearCotizacion(
-                            precioMetroCuadrado!,
-                            superficie!,
-                            cuotaInicial,
-                            tiempo!,
-                            referencia!);
+                            final cotizacionAGuardar = crearCotizacion(
+                                precioMetroCuadrado!,
+                                superficie!,
+                                cuotaInicial,
+                                tiempo!,
+                                referencia!);
 
-                        cotizaciones.add(cotizacionAGuardar);
+                            cotizaciones.add(cotizacionAGuardar);
 
-                        guardarCotizaciones();
+                            guardarCotizaciones();
 
-                        showConfirmation(context);
-                      }
-                    },
-                    style: const ButtonStyle(
-                        elevation: MaterialStatePropertyAll(6),
-                        shadowColor:
-                            MaterialStatePropertyAll(Colors.transparent)),
-                    child: const Text(
-                      'Guardar Cotizacion',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                            showConfirmation(context);
+                          }
+                        },
+                        style: const ButtonStyle(
+                            elevation: MaterialStatePropertyAll(6),
+                            shadowColor:
+                                MaterialStatePropertyAll(Colors.transparent)),
+                        child: const Text(
+                          'Guardar Cotizacion',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(height: 20),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 30,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _formKey.currentState!.reset();
+                        },
+                        style: const ButtonStyle(
+                            elevation: MaterialStatePropertyAll(6),
+                            shadowColor:
+                                MaterialStatePropertyAll(Colors.transparent)),
+                        child: const Text(
+                          'Nueva Cotizacion',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -341,77 +376,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        duration: Duration(seconds: 3),
+        duration: Duration(seconds: 2),
         backgroundColor: Colors.green,
         elevation: 0,
         padding: EdgeInsets.all(20),
         behavior: SnackBarBehavior.fixed,
-      ),
-    );
-  }
-
-  SizedBox botonCotizarAsesor(BuildContext context) {
-    return SizedBox(
-      height: 70,
-      width: 170,
-      child: ElevatedButton(
-        style: const ButtonStyle(
-          elevation: MaterialStatePropertyAll(8),
-          surfaceTintColor: MaterialStatePropertyAll(Colors.red),
-          shadowColor: MaterialStatePropertyAll(Colors.transparent),
-        ),
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            _formKey.currentState!.save();
-            FocusScope.of(context).unfocus();
-
-            final cotizacion = crearCotizacion(precioMetroCuadrado!,
-                superficie!, cuotaInicial, tiempo!, referencia!);
-
-            cotizarAsesor(cotizacion);
-          }
-        },
-        child: Text(
-          'Cotizar a \nAsesor',
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? Colors.white
-                  : Colors.black),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
-  SizedBox botonCotizarCliente(BuildContext context) {
-    return SizedBox(
-      height: 70,
-      width: 170,
-      child: ElevatedButton(
-        style: const ButtonStyle(
-            elevation: MaterialStatePropertyAll(8),
-            shadowColor: MaterialStatePropertyAll(Colors.transparent)),
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            _formKey.currentState!.save();
-            FocusScope.of(context).unfocus();
-
-            final cotizacion = crearCotizacion(precioMetroCuadrado!,
-                superficie!, cuotaInicial, tiempo!, referencia!);
-
-            cotizarCliente(cotizacion);
-          }
-        },
-        child: Text('Cotizar a Cliente',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).brightness == Brightness.dark
-                    ? Colors.white
-                    : Colors.black)),
       ),
     );
   }
