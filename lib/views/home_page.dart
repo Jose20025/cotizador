@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../custom/input_form.dart';
 import '../models/cotizacion.dart';
+import '../utils/proyectos.dart';
 import 'cotizacion_page.dart';
 import 'historial_page.dart';
 import 'package:flutter/material.dart';
@@ -37,23 +38,21 @@ class _HomePageState extends State<HomePage> {
   double? cuotaInicial;
   int? tiempo;
   String? referencia;
+  int? numeroProyecto;
 
   //* METODOS
 
   Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
-      double? cuotaInicial, int tiempo, String referencia) {
-    final montoTotal = superficie * precioMetroCuadrado;
+      double? cuotaInicial, int tiempo, String referencia, int numeroProyecto) {
+    double montoTotal = superficie * precioMetroCuadrado;
 
-    final montoTotalSinInicial =
-        cuotaInicial != null ? (montoTotal - cuotaInicial) : null;
+    if (cuotaInicial != null) {
+      montoTotal -= cuotaInicial;
+    }
 
-    final mantenimiento = cuotaInicial != null
-        ? obtenerMontoMantenimiento(montoTotalSinInicial!)
-        : obtenerMontoMantenimiento(montoTotal);
+    final mantenimiento = obtenerMontoMantenimiento(montoTotal);
 
-    final montoPagar = cuotaInicial != null
-        ? (montoTotalSinInicial! + mantenimiento)
-        : (montoTotal + mantenimiento);
+    final montoPagar = (montoTotal + mantenimiento);
 
     final importeCuotas = montoPagar / tiempo;
 
@@ -64,10 +63,9 @@ class _HomePageState extends State<HomePage> {
       referencia: referencia,
       cuotaInicial: cuotaInicial,
       importeCuotas: importeCuotas,
-      mantenimiento: mantenimiento,
-      montoPagar: montoPagar,
       montoTotal: montoTotal,
       fecha: DateTime.now(),
+      proyecto: proyectos[numeroProyecto]!,
     );
   }
 
@@ -178,6 +176,24 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 10),
           const Divider(),
           const SizedBox(height: 10),
+          DropdownMenu(
+            onSelected: (value) {
+              numeroProyecto = value;
+            },
+            label: const Text('Proyecto'),
+            width: MediaQuery.of(context).size.width - 45,
+            dropdownMenuEntries: const [
+              DropdownMenuEntry(value: 0, label: 'Cartagena 1'),
+              DropdownMenuEntry(value: 1, label: 'Cartagena 2'),
+              DropdownMenuEntry(value: 2, label: 'Mana 1'),
+              DropdownMenuEntry(value: 3, label: 'Mana 2'),
+              DropdownMenuEntry(value: 4, label: 'Mana 3'),
+              DropdownMenuEntry(value: 5, label: 'Mana 4'),
+              DropdownMenuEntry(value: 6, label: 'Mana 5'),
+              DropdownMenuEntry(value: 7, label: 'Mana 6'),
+            ],
+          ),
+          const SizedBox(height: 15),
           Form(
             key: _formKey,
             child: Column(
@@ -257,8 +273,13 @@ class _HomePageState extends State<HomePage> {
                         _formKey.currentState!.save();
                         FocusScope.of(context).unfocus();
 
-                        final cotizacion = crearCotizacion(precioMetroCuadrado!,
-                            superficie!, cuotaInicial, tiempo!, referencia!);
+                        final cotizacion = crearCotizacion(
+                            precioMetroCuadrado!,
+                            superficie!,
+                            cuotaInicial,
+                            tiempo!,
+                            referencia!,
+                            numeroProyecto!);
 
                         Navigator.push(
                           context,
@@ -300,7 +321,8 @@ class _HomePageState extends State<HomePage> {
                                 superficie!,
                                 cuotaInicial,
                                 tiempo!,
-                                referencia!);
+                                referencia!,
+                                numeroProyecto!);
 
                             cotizaciones.add(cotizacionAGuardar);
 
