@@ -184,6 +184,8 @@ class _HomePageState extends State<HomePage> {
             width: MediaQuery.of(context).size.width - 45,
             trailingIcon: const Icon(Icons.add_chart),
             dropdownMenuEntries: const [
+              // TODO automatizar esto
+
               DropdownMenuEntry(value: 0, label: 'Cartagena 1'),
               DropdownMenuEntry(value: 1, label: 'Cartagena 2'),
               DropdownMenuEntry(value: 2, label: 'Mana 1'),
