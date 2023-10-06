@@ -182,6 +182,7 @@ class _HomePageState extends State<HomePage> {
             },
             label: const Text('Proyecto'),
             width: MediaQuery.of(context).size.width - 45,
+            trailingIcon: const Icon(Icons.add_chart),
             dropdownMenuEntries: const [
               DropdownMenuEntry(value: 0, label: 'Cartagena 1'),
               DropdownMenuEntry(value: 1, label: 'Cartagena 2'),
@@ -268,7 +269,29 @@ class _HomePageState extends State<HomePage> {
                         elevation: MaterialStatePropertyAll(8),
                         shadowColor:
                             MaterialStatePropertyAll(Colors.transparent)),
-                    onPressed: () {
+                    onPressed: () async {
+                      if (numeroProyecto == null) {
+                        await showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (context) => AlertDialog(
+                            title: const Text('Error'),
+                            content:
+                                const Text('Debe de seleccionar un proyecto'),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: const Text('Ok'),
+                              )
+                            ],
+                          ),
+                        );
+
+                        return;
+                      }
+
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         FocusScope.of(context).unfocus();
@@ -310,7 +333,29 @@ class _HomePageState extends State<HomePage> {
                       width: MediaQuery.of(context).size.width - 30,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          if (numeroProyecto == null) {
+                            await showDialog(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Error'),
+                                content: const Text(
+                                    'Debe de seleccionar un proyecto'),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Ok'),
+                                  )
+                                ],
+                              ),
+                            );
+
+                            return;
+                          }
+
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
                             _formKey.currentState!.reset();
