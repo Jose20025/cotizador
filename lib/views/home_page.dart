@@ -95,39 +95,9 @@ class _HomePageState extends State<HomePage> {
 
   // Eliminar Historial
   // TODO REFACTORIZAR
-  Future<void> elimiarHistorial() async {
-    await showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        content: const Text('¿Estás seguro de borrar el historial?'),
-        title: const Text("Confirmación"),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text("No"),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                cotizaciones.clear();
-                guardarCotizaciones();
-              });
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HistorialPage(
-                    cotizaciones: cotizaciones,
-                    eliminarHistorial: elimiarHistorial),
-              ));
-            },
-            child: const Text("Si"),
-          ),
-        ],
-      ),
-    );
+  void eliminarHistorial() async {
+    cotizaciones.clear();
+    guardarCotizaciones();
   }
 
   //* BODY
@@ -159,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                     builder: (context) => HistorialPage(
                       cotizaciones: cotizaciones.reversed.toList(),
-                      eliminarHistorial: elimiarHistorial,
+                      eliminarHistorial: eliminarHistorial,
                     ),
                   ),
                 );
@@ -215,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InputForm(
                       validate: true,
@@ -227,6 +197,7 @@ class _HomePageState extends State<HomePage> {
                         precioMetroCuadrado = double.parse(value!);
                       },
                     ),
+                    const SizedBox(width: 30),
                     InputForm(
                       validate: true,
                       maxLength: 10,
@@ -241,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InputForm(
                       validate: false,
@@ -253,6 +224,7 @@ class _HomePageState extends State<HomePage> {
                             value!.isNotEmpty ? double.parse(value) : null;
                       },
                     ),
+                    const SizedBox(width: 30),
                     InputForm(
                       validate: true,
                       width: 150,
