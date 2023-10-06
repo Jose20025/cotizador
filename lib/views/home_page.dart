@@ -147,26 +147,26 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 10),
           const Divider(),
           const SizedBox(height: 10),
-          DropdownMenu(
-            onSelected: (value) {
-              numeroProyecto = value;
-            },
-            label: const Text('Proyecto'),
-            width: MediaQuery.of(context).size.width - 45,
-            trailingIcon: const Icon(Icons.add_chart),
-            // TODO Hacerlo scrollable
-            dropdownMenuEntries: const [
-              // TODO automatizar esto
-
-              DropdownMenuEntry(value: 0, label: 'Cartagena 1'),
-              DropdownMenuEntry(value: 1, label: 'Cartagena 2'),
-              DropdownMenuEntry(value: 2, label: 'Mana 1'),
-              DropdownMenuEntry(value: 3, label: 'Mana 2'),
-              DropdownMenuEntry(value: 4, label: 'Mana 3'),
-              DropdownMenuEntry(value: 5, label: 'Mana 4'),
-              DropdownMenuEntry(value: 6, label: 'Mana 5'),
-              DropdownMenuEntry(value: 7, label: 'Mana 6'),
-            ],
+          SingleChildScrollView(
+            child: DropdownMenu(
+              onSelected: (value) {
+                numeroProyecto = value;
+              },
+              label: const Text('Proyecto'),
+              width: MediaQuery.of(context).size.width - 45,
+              trailingIcon: const Icon(Icons.add_chart),
+              dropdownMenuEntries: const [
+                // TODO automatizar esto
+                DropdownMenuEntry(value: 0, label: 'Cartagena 1'),
+                DropdownMenuEntry(value: 1, label: 'Cartagena 2'),
+                DropdownMenuEntry(value: 2, label: 'Mana 1'),
+                DropdownMenuEntry(value: 3, label: 'Mana 2'),
+                DropdownMenuEntry(value: 4, label: 'Mana 3'),
+                DropdownMenuEntry(value: 5, label: 'Mana 4'),
+                DropdownMenuEntry(value: 6, label: 'Mana 5'),
+                DropdownMenuEntry(value: 7, label: 'Mana 6'),
+              ],
+            ),
           ),
           const SizedBox(height: 15),
           Form(
