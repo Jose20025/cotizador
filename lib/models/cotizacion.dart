@@ -3,37 +3,35 @@ class Cotizacion {
   double precioMetroCuadrado;
   double? montoTotal;
   double? cuotaInicial;
-  double? mantenimiento;
   int tiempo;
   DateTime? fecha;
   String referencia;
   double? importeCuotas;
-  double? montoPagar;
+  String proyecto;
 
-  Cotizacion(
-      {required this.superficie,
-      required this.precioMetroCuadrado,
-      required this.tiempo,
-      required this.referencia,
-      this.montoTotal,
-      this.mantenimiento,
-      this.fecha,
-      this.cuotaInicial,
-      this.importeCuotas,
-      this.montoPagar});
+  Cotizacion({
+    required this.superficie,
+    required this.precioMetroCuadrado,
+    required this.referencia,
+    this.cuotaInicial,
+    required this.fecha,
+    required this.importeCuotas,
+    required this.tiempo,
+    required this.montoTotal,
+    required this.proyecto,
+  });
 
   factory Cotizacion.fromJson(Map<String, dynamic> json) {
     return Cotizacion(
       superficie: json['superficie'],
       referencia: json['referencia'],
+      proyecto: json['proyecto'],
       precioMetroCuadrado: json['precioMetroCuadrado'],
       fecha: DateTime.parse(json['fecha']),
       montoTotal: json['montoTotal'],
       tiempo: json['tiempo'],
       cuotaInicial: json['cuotaInicial'],
-      mantenimiento: json['mantenimiento'],
       importeCuotas: json['importeCuotas'],
-      montoPagar: json['montoPagar'],
     );
   }
 
@@ -44,9 +42,8 @@ class Cotizacion {
         'referencia': referencia,
         'tiempo': tiempo,
         'importeCuotas': importeCuotas,
-        'mantenimiento': mantenimiento,
         'fecha': fecha!.toIso8601String(),
+        'proyecto': proyecto,
         'montoTotal': montoTotal,
-        'montoPagar': montoPagar,
       };
 }
