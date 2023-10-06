@@ -14,21 +14,45 @@ class HistorialPage extends StatefulWidget {
 }
 
 class _HistorialPageState extends State<HistorialPage> {
+  Future<void> eliminarHistorial() async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: const Text('¿Estás seguro de borrar el historial?'),
+        title: const Text("Confirmación"),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text("No"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                widget.eliminarHistorial();
+                widget.cotizaciones.clear();
+                Navigator.of(context).pop();
+              });
+            },
+            child: const Text("Si"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Historial de Cotizaciones'),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
+        leading: const BackButton(),
         actions: [
           IconButton(
             onPressed: () async {
-              await widget.eliminarHistorial();
+              await eliminarHistorial();
             },
             icon: const Icon(Icons.delete_forever),
           )
@@ -41,11 +65,14 @@ class _HistorialPageState extends State<HistorialPage> {
               separatorBuilder: (context, index) => const Divider(),
               itemCount: widget.cotizaciones.length,
             )
-          : const Center(
-              child: Text(
-                'No hay cotizaciones guardadas aun',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+          : Container(
+              margin: const EdgeInsets.all(10),
+              child: const Center(
+                child: Text(
+                  'No hay cotizaciones guardadas aun',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
     );
