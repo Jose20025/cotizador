@@ -40,6 +40,11 @@ class CotizacionPage extends StatelessWidget {
           child: Column(
             children: [
               CustomCard(
+                title: 'Proyecto',
+                subtitle: cotizacion.proyecto,
+                icon: Icons.monetization_on_outlined,
+              ),
+              CustomCard(
                 title: 'Superficie del Lote',
                 subtitle:
                     '${NumberFormat.decimalPatternDigits().format(cotizacion.superficie)} m²',
@@ -53,7 +58,7 @@ class CotizacionPage extends StatelessWidget {
               ),
               CustomCard(
                 title: 'Monto Total',
-                subtitle: NumberFormat.currency().format(cotizacion.montoPagar),
+                subtitle: NumberFormat.currency().format(cotizacion.montoTotal),
                 icon: Icons.monetization_on_outlined,
               ),
               cotizacion.cuotaInicial != null
