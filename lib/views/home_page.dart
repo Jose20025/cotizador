@@ -94,6 +94,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Eliminar Historial
+  // TODO REFACTORIZAR
   Future<void> elimiarHistorial() async {
     await showDialog(
       context: context,
@@ -183,6 +184,7 @@ class _HomePageState extends State<HomePage> {
             label: const Text('Proyecto'),
             width: MediaQuery.of(context).size.width - 45,
             trailingIcon: const Icon(Icons.add_chart),
+            // TODO Hacerlo scrollable
             dropdownMenuEntries: const [
               // TODO automatizar esto
 
@@ -362,6 +364,7 @@ class _HomePageState extends State<HomePage> {
                             _formKey.currentState!.save();
                             _formKey.currentState!.reset();
                             FocusScope.of(context).unfocus();
+                            // TODO que se borre tambien el dropdown
 
                             final cotizacionAGuardar = crearCotizacion(
                                 precioMetroCuadrado!,

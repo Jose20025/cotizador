@@ -13,7 +13,7 @@ class MiniCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 320,
+      width: MediaQuery.of(context).size.width - 80,
       child: Card(
         elevation: 1,
         child: Padding(

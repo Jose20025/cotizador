@@ -5,8 +5,6 @@ class InputForm extends StatelessWidget {
   final String label;
   final TextCapitalization? textCapitalization;
   final bool validate;
-  final double? initialValue;
-  // final String? Function(String?)? validator;
   final int? maxLength;
   final TextInputType? type;
   final void Function(String?)? onSave;
@@ -15,7 +13,6 @@ class InputForm extends StatelessWidget {
     super.key,
     this.type,
     this.maxLength,
-    this.initialValue,
     this.onSave,
     this.textCapitalization,
     required this.validate,
@@ -40,8 +37,6 @@ class InputForm extends StatelessWidget {
         maxLength: maxLength ?? 15,
         keyboardType: type ?? TextInputType.text,
         textCapitalization: textCapitalization ?? TextCapitalization.none,
-        initialValue:
-            initialValue != null ? initialValue!.toStringAsFixed(0) : '',
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 18),
         decoration: InputDecoration(

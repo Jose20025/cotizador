@@ -40,7 +40,7 @@ class CotizacionCard extends StatelessWidget {
               ),
               Center(
                 child: Text(
-                  'Cotización para:\t\t\t\t\t\t ${cotizacion.referencia}',
+                  'Cotización para:    ${cotizacion.referencia}',
                   style: const TextStyle(
                       fontSize: 17, fontWeight: FontWeight.bold),
                 ),
