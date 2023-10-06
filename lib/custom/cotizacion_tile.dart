@@ -51,8 +51,12 @@ class CotizacionCard extends StatelessWidget {
             children: [
               const Divider(),
               MiniCard(
+                title: 'Proyecto',
+                subtitle: cotizacion.proyecto,
+              ),
+              MiniCard(
                 title: 'Monto Total',
-                subtitle: NumberFormat.currency().format(cotizacion.montoPagar),
+                subtitle: NumberFormat.currency().format(cotizacion.montoTotal),
               ),
               MiniCard(
                 title: 'Tiempo',

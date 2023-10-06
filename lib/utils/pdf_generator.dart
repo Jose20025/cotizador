@@ -105,7 +105,7 @@ class PDFGenerator {
                       style: pw.TextStyle(
                           fontWeight: pw.FontWeight.bold, fontSize: 16)),
                   pw.SizedBox(width: 70),
-                  pw.Text(NumberFormat.currency().format(cotizacion.montoPagar),
+                  pw.Text(NumberFormat.currency().format(cotizacion.montoTotal),
                       style: const pw.TextStyle(fontSize: 16)),
                 ],
               ),
