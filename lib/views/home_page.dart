@@ -148,36 +148,30 @@ class _HomePageState extends State<HomePage> {
           const Divider(),
           const SizedBox(height: 10),
           SizedBox(
+            width: MediaQuery.of(context).size.width - 45,
             child: SingleChildScrollView(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  DropdownButton<int>(
-                    value: numeroProyecto,
-                    onChanged: (newvalue) {
-                      setState(() {
-                        numeroProyecto = newvalue;
-                      });
-                    },
-                    hint: const Text('Proyecto'),
-                    icon: const Icon(Icons.add_chart),
-                    items: const [
-                      // TODO automatizar esto
-                      DropdownMenuItem<int>(
-                          value: 0, child: Text('Cartagena 1')),
-                      DropdownMenuItem<int>(
-                          value: 1, child: Text('Cartagena 2')),
-                      DropdownMenuItem<int>(value: 2, child: Text('Mana 1')),
-                      DropdownMenuItem<int>(value: 3, child: Text('Mana 2')),
-                      DropdownMenuItem<int>(value: 4, child: Text('Mana 3')),
-                      DropdownMenuItem<int>(value: 5, child: Text('Mana 4')),
-                      DropdownMenuItem<int>(value: 6, child: Text('Mana 5')),
-                      DropdownMenuItem<int>(value: 7, child: Text('Mana 6')),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                child: DropdownButtonFormField<int>(
+              value: numeroProyecto,
+              onChanged: (newvalue) {
+                setState(() {
+                  numeroProyecto = newvalue;
+                });
+              },
+              hint: const Text('Proyecto'),
+              icon: const Icon(Icons.add_chart),
+              decoration: const InputDecoration(border: OutlineInputBorder()),
+              items: const [
+                // TODO automatizar esto
+                DropdownMenuItem<int>(value: 0, child: Text('Cartagena 1')),
+                DropdownMenuItem<int>(value: 1, child: Text('Cartagena 2')),
+                DropdownMenuItem<int>(value: 2, child: Text('Mana 1')),
+                DropdownMenuItem<int>(value: 3, child: Text('Mana 2')),
+                DropdownMenuItem<int>(value: 4, child: Text('Mana 3')),
+                DropdownMenuItem<int>(value: 5, child: Text('Mana 4')),
+                DropdownMenuItem<int>(value: 6, child: Text('Mana 5')),
+                DropdownMenuItem<int>(value: 7, child: Text('Mana 6')),
+              ],
+            )),
           ),
           const SizedBox(height: 15),
           Form(
