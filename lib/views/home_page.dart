@@ -94,7 +94,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Eliminar Historial
-  // TODO REFACTORIZAR
   void eliminarHistorial() async {
     cotizaciones.clear();
     guardarCotizaciones();
