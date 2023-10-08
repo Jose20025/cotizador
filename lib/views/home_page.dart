@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../custom/input_form.dart';
 import '../models/cotizacion.dart';
+import '../utils/cotizaciones.dart';
 import '../utils/proyectos.dart';
 import 'cotizacion_page.dart';
 import 'historial_page.dart';
@@ -39,39 +40,6 @@ class _HomePageState extends State<HomePage> {
   int? tiempo;
   String? referencia;
   int? numeroProyecto;
-
-  //* METODOS
-
-  Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
-      double? cuotaInicial, int tiempo, String referencia, int numeroProyecto) {
-    double montoTotal = superficie * precioMetroCuadrado;
-
-    if (cuotaInicial != null) {
-      montoTotal -= cuotaInicial;
-    }
-
-    final mantenimiento = obtenerMontoMantenimiento(montoTotal);
-
-    final montoPagar = (montoTotal + mantenimiento);
-
-    final importeCuotas = montoPagar / tiempo;
-
-    return Cotizacion(
-      superficie: superficie,
-      precioMetroCuadrado: precioMetroCuadrado,
-      tiempo: tiempo,
-      referencia: referencia,
-      cuotaInicial: cuotaInicial,
-      importeCuotas: importeCuotas,
-      montoTotal: montoTotal,
-      fecha: DateTime.now(),
-      proyecto: proyectos[numeroProyecto]!,
-    );
-  }
-
-  double obtenerMontoMantenimiento(double monto) {
-    return monto * 8 / 100 * 10;
-  }
 
   void obtenerCotizaciones() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
