@@ -64,152 +64,194 @@ class PDFGenerator {
         //! BUILD
         build: (context) => [
           pw.SizedBox(height: 20),
-          pw.Text('COTIZACIÓN',
-              style:
-                  pw.TextStyle(fontSize: 36, fontWeight: pw.FontWeight.bold)),
-          crearDivisor(),
-          pw.SizedBox(height: 25),
           pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 15),
-            child: pw.Row(
+            padding: const pw.EdgeInsets.all(10),
+            decoration: pw.BoxDecoration(
+              borderRadius: pw.BorderRadius.circular(10),
+              color: PdfColors.lightGreen,
+            ),
+            child: pw.Text(
+              'COTIZACIÓN',
+              style: pw.TextStyle(
+                fontSize: 36,
+                fontWeight: pw.FontWeight.bold,
+                color: PdfColors.white,
+              ),
+            ),
+          ),
+          pw.Divider(),
+          pw.Container(
+            padding: const pw.EdgeInsets.all(15),
+            child: pw.Column(
               children: [
-                pw.Text(
-                  'Fecha: ',
-                  style: pw.TextStyle(
-                      fontSize: 15, fontWeight: pw.FontWeight.bold),
+                pw.Container(
+                  margin: const pw.EdgeInsets.only(left: 15, right: 15),
+                  child: pw.Row(
+                    children: [
+                      pw.Text(
+                        'Fecha: ',
+                        style: pw.TextStyle(
+                            fontSize: 16, fontWeight: pw.FontWeight.bold),
+                      ),
+                      pw.SizedBox(width: 5),
+                      pw.Text(
+                          DateFormat("dd 'de' MMMM, yyyy")
+                              .format(cotizacion.fecha!),
+                          style: const pw.TextStyle(fontSize: 16)),
+                    ],
+                  ),
                 ),
-                pw.SizedBox(width: 5),
-                pw.Text(
-                    DateFormat("dd 'de' MMMM, yyyy").format(cotizacion.fecha!),
-                    style: const pw.TextStyle(fontSize: 15)),
+                pw.SizedBox(height: 10),
+                pw.Container(
+                  margin: const pw.EdgeInsets.only(left: 15, right: 15),
+                  width: double.infinity,
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Row(
+                        children: [
+                          pw.Text(
+                            'Proyecto: ',
+                            style: pw.TextStyle(
+                                fontSize: 16, fontWeight: pw.FontWeight.bold),
+                          ),
+                          pw.SizedBox(width: 5),
+                          pw.Text(
+                            cotizacion.proyecto,
+                            style: const pw.TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                      pw.Row(
+                        children: [
+                          pw.Text(
+                            'Cliente: ',
+                            style: pw.TextStyle(
+                                fontSize: 16, fontWeight: pw.FontWeight.bold),
+                          ),
+                          pw.SizedBox(width: 5),
+                          pw.Text(
+                            cotizacion.referencia,
+                            style: const pw.TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          pw.SizedBox(height: 10),
-          pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 15),
-            width: double.infinity,
-            child: pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Row(
-                  children: [
-                    pw.Text(
-                      'Proyecto: ',
-                      style: pw.TextStyle(
-                          fontSize: 15, fontWeight: pw.FontWeight.bold),
-                    ),
-                    pw.SizedBox(width: 5),
-                    pw.Text(
-                      cotizacion.proyecto,
-                      style: const pw.TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-                pw.Row(
-                  children: [
-                    pw.Text(
-                      'Cliente: ',
-                      style: pw.TextStyle(
-                          fontSize: 15, fontWeight: pw.FontWeight.bold),
-                    ),
-                    pw.SizedBox(width: 5),
-                    pw.Text(
-                      cotizacion.referencia,
-                      style: const pw.TextStyle(fontSize: 15),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          pw.SizedBox(height: 25),
-          crearDivisor(),
+          pw.Divider(),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15),
             child: pw.Text(
               'Información del Lote',
-              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 17),
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18),
             ),
           ),
-          crearDivisor(),
-          pw.SizedBox(height: 20),
+          pw.Divider(),
           pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 35),
-            width: double.infinity,
-            child: pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            padding: const pw.EdgeInsets.all(15),
+            child: pw.Column(
               children: [
-                pw.Text(
-                  'Superficie',
-                  style: const pw.TextStyle(fontSize: 15),
+                pw.Container(
+                  margin: const pw.EdgeInsets.only(left: 15, right: 35),
+                  width: double.infinity,
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text(
+                        'Superficie',
+                        style: const pw.TextStyle(fontSize: 16),
+                      ),
+                      pw.Text(
+                        '${NumberFormat.decimalPatternDigits().format(cotizacion.superficie)} m²',
+                        style: const pw.TextStyle(fontSize: 16),
+                      )
+                    ],
+                  ),
                 ),
-                pw.Text(
-                  '${NumberFormat.decimalPatternDigits().format(cotizacion.superficie)} m²',
-                  style: const pw.TextStyle(fontSize: 15),
-                )
+                pw.SizedBox(height: 10),
+                pw.Container(
+                  margin: const pw.EdgeInsets.only(left: 15, right: 35),
+                  width: double.infinity,
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text(
+                        'Precio del Lote',
+                        style: const pw.TextStyle(fontSize: 16),
+                      ),
+                      pw.Text(
+                        NumberFormat.currency().format(cotizacion.montoTotal),
+                        style: const pw.TextStyle(fontSize: 16),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          pw.SizedBox(height: 20),
-          crearDivisor(),
+          pw.Divider(),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15),
             child: pw.Text(
               'Plan de Pago',
-              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 17),
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold, fontSize: 18),
             ),
           ),
-          crearDivisor(),
-          pw.SizedBox(height: 25),
+          pw.Divider(),
+          pw.SizedBox(height: 15),
           pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 20),
+            margin: const pw.EdgeInsets.only(left: 30, right: 20),
             width: double.infinity,
             child: pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(
                   'Tiempo',
-                  style: const pw.TextStyle(fontSize: 15),
+                  style: const pw.TextStyle(fontSize: 16),
                 ),
                 pw.Text(
                   '${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo / 12)} ${(cotizacion.tiempo / 12) > 1 ? "años" : "año"} | ${NumberFormat.decimalPatternDigits().format(cotizacion.tiempo)} ${(cotizacion.tiempo) > 1 ? "meses" : "mes"}',
-                  style: const pw.TextStyle(fontSize: 15),
+                  style: const pw.TextStyle(fontSize: 16),
                 )
               ],
             ),
           ),
           pw.SizedBox(height: 10),
           pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 20),
+            margin: const pw.EdgeInsets.only(left: 30, right: 20),
             width: double.infinity,
             child: pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(
                   'Cuota Inicial',
-                  style: const pw.TextStyle(fontSize: 15),
+                  style: const pw.TextStyle(fontSize: 16),
                 ),
                 pw.Text(
                   NumberFormat.currency().format(cotizacion.cuotaInicial),
-                  style: const pw.TextStyle(fontSize: 15),
+                  style: const pw.TextStyle(fontSize: 16),
                 )
               ],
             ),
           ),
           pw.SizedBox(height: 10),
           pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 20),
+            margin: const pw.EdgeInsets.only(left: 30, right: 20),
             child: pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(
-                  'Importe de Cuotas',
-                  style: const pw.TextStyle(fontSize: 15),
+                  'Monto sin Cuota Inicial',
+                  style: const pw.TextStyle(fontSize: 16),
                 ),
                 pw.Text(
-                  NumberFormat.currency().format(cotizacion.importeCuotas),
-                  style: const pw.TextStyle(fontSize: 15),
+                  NumberFormat.currency()
+                      .format(cotizacion.montoTotal! - cotizacion.cuotaInicial),
+                  style: const pw.TextStyle(fontSize: 16),
                 )
               ],
             ),
@@ -217,37 +259,38 @@ class PDFGenerator {
           pw.SizedBox(height: 20),
           pw.Row(
             children: [
-              pw.Spacer(flex: 4),
+              pw.Spacer(flex: 3),
               pw.Expanded(
-                flex: 6,
+                flex: 7,
                 child: pw.Divider(),
               )
             ],
           ),
-          pw.SizedBox(height: 20),
+          pw.SizedBox(height: 15),
           pw.Row(
             children: [
               pw.Spacer(flex: 4),
               pw.Expanded(
-                  flex: 6,
-                  child: pw.Container(
-                    margin: const pw.EdgeInsets.symmetric(horizontal: 15),
-                    child: pw.Row(
-                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                      children: [
-                        pw.Text(
-                          'Monto Total',
-                          style: pw.TextStyle(
-                              fontSize: 18, fontWeight: pw.FontWeight.bold),
-                        ),
-                        pw.Text(
-                          NumberFormat.currency().format(cotizacion.montoTotal),
-                          style: pw.TextStyle(
-                              fontSize: 18, fontWeight: pw.FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ))
+                flex: 6,
+                child: pw.Container(
+                  margin: const pw.EdgeInsets.symmetric(horizontal: 15),
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text(
+                        'Cuotas Mensuales',
+                        style: const pw.TextStyle(fontSize: 16),
+                      ),
+                      pw.Text(
+                        NumberFormat.currency()
+                            .format(cotizacion.importeCuotas),
+                        style: pw.TextStyle(
+                            fontSize: 16, fontWeight: pw.FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           )
         ],
@@ -289,11 +332,11 @@ class PDFGenerator {
         ignoreMargins: false,
         child: pw.Watermark(
           child: pw.Opacity(
-            opacity: 0.2,
+            opacity: 0.1,
             child: pw.Image(
               logos,
-              alignment: pw.Alignment.center,
-              fit: pw.BoxFit.cover,
+              // alignment: pw.Alignment.center,
+              // fit: pw.BoxFit.cover,
             ),
           ),
         ),
