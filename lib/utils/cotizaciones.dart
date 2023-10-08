@@ -9,7 +9,7 @@ Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
     montoTotal -= cuotaInicial;
   }
 
-  final mantenimiento = obtenerMontoMantenimiento(montoTotal);
+  final mantenimiento = obtenerMontoMantenimiento(montoTotal, tiempo);
 
   final montoPagar = (montoTotal + mantenimiento);
 
@@ -22,12 +22,13 @@ Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
     referencia: referencia,
     cuotaInicial: cuotaInicial,
     importeCuotas: importeCuotas,
-    montoTotal: montoTotal,
+    montoTotal:
+        cuotaInicial != null ? montoTotal : (montoTotal + cuotaInicial!),
     fecha: DateTime.now(),
     proyecto: proyectos[numeroProyecto]!,
   );
 }
 
-double obtenerMontoMantenimiento(double monto) {
-  return monto * 8 / 100 * 10;
+double obtenerMontoMantenimiento(double monto, int tiempoMeses) {
+  return monto * 8 / 100 * (tiempoMeses / 12);
 }
