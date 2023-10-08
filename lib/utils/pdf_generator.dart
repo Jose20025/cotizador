@@ -68,7 +68,7 @@ class PDFGenerator {
               style:
                   pw.TextStyle(fontSize: 36, fontWeight: pw.FontWeight.bold)),
           crearDivisor(),
-          pw.SizedBox(height: 15),
+          pw.SizedBox(height: 25),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15, right: 15),
             child: pw.Row(
@@ -123,7 +123,7 @@ class PDFGenerator {
               ],
             ),
           ),
-          pw.SizedBox(height: 15),
+          pw.SizedBox(height: 25),
           crearDivisor(),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15),
@@ -133,7 +133,7 @@ class PDFGenerator {
             ),
           ),
           crearDivisor(),
-          pw.SizedBox(height: 10),
+          pw.SizedBox(height: 20),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15, right: 35),
             width: double.infinity,
@@ -151,63 +151,7 @@ class PDFGenerator {
               ],
             ),
           ),
-          pw.SizedBox(height: 10),
-          pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 35),
-            width: double.infinity,
-            child: pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text(
-                  'Precio por m²',
-                  style: const pw.TextStyle(fontSize: 15),
-                ),
-                pw.Text(
-                  NumberFormat.currency()
-                      .format(cotizacion.precioMetroCuadrado),
-                  style: const pw.TextStyle(fontSize: 15),
-                )
-              ],
-            ),
-          ),
-          pw.SizedBox(height: 10),
-          pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 35),
-            width: double.infinity,
-            child: pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text(
-                  'Monto',
-                  style: const pw.TextStyle(fontSize: 15),
-                ),
-                pw.Text(
-                  NumberFormat.currency().format(
-                      cotizacion.precioMetroCuadrado * cotizacion.superficie),
-                  style: const pw.TextStyle(fontSize: 15),
-                )
-              ],
-            ),
-          ),
-          pw.SizedBox(height: 10),
-          pw.Container(
-            margin: const pw.EdgeInsets.only(left: 15, right: 35),
-            width: double.infinity,
-            child: pw.Row(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-              children: [
-                pw.Text(
-                  'Mantenimiento',
-                  style: const pw.TextStyle(fontSize: 15),
-                ),
-                pw.Text(
-                  NumberFormat.currency().format(cotizacion.mantenimiento),
-                  style: const pw.TextStyle(fontSize: 15),
-                )
-              ],
-            ),
-          ),
-          pw.SizedBox(height: 10),
+          pw.SizedBox(height: 20),
           crearDivisor(),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15),
@@ -217,7 +161,7 @@ class PDFGenerator {
             ),
           ),
           crearDivisor(),
-          pw.SizedBox(height: 10),
+          pw.SizedBox(height: 25),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15, right: 20),
             width: double.infinity,
@@ -270,7 +214,7 @@ class PDFGenerator {
               ],
             ),
           ),
-          pw.SizedBox(height: 10),
+          pw.SizedBox(height: 20),
           pw.Row(
             children: [
               pw.Spacer(flex: 4),
@@ -280,7 +224,7 @@ class PDFGenerator {
               )
             ],
           ),
-          pw.SizedBox(height: 10),
+          pw.SizedBox(height: 20),
           pw.Row(
             children: [
               pw.Spacer(flex: 4),
@@ -344,7 +288,6 @@ class PDFGenerator {
       buildBackground: (context) => pw.FullPage(
         ignoreMargins: false,
         child: pw.Watermark(
-          angle: 20,
           child: pw.Opacity(
             opacity: 0.2,
             child: pw.Image(
