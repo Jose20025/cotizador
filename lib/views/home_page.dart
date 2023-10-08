@@ -341,8 +341,6 @@ class _HomePageState extends State<HomePage> {
                             _formKey.currentState!.reset();
                             FocusScope.of(context).unfocus();
 
-                            // TODO que se borre tambien el dropdown
-
                             final cotizacionAGuardar = crearCotizacion(
                                 precioMetroCuadrado!,
                                 superficie!,

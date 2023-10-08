@@ -61,13 +61,11 @@ class CotizacionPage extends StatelessWidget {
                 subtitle: NumberFormat.currency().format(cotizacion.montoTotal),
                 icon: Icons.monetization_on_outlined,
               ),
-              cotizacion.cuotaInicial != null
-                  ? CustomCard(
-                      title: 'Cuota Inicial',
-                      subtitle: NumberFormat.currency()
-                          .format(cotizacion.cuotaInicial),
-                      icon: Icons.monetization_on_outlined)
-                  : const SizedBox(),
+              CustomCard(
+                  title: 'Cuota Inicial',
+                  subtitle:
+                      NumberFormat.currency().format(cotizacion.cuotaInicial),
+                  icon: Icons.monetization_on_outlined),
               CustomCard(
                 icon: Icons.access_alarm_outlined,
                 title: 'Tiempo',
