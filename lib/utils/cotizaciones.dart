@@ -23,7 +23,7 @@ Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
     cuotaInicial: cuotaInicial,
     importeCuotas: importeCuotas,
     montoTotal:
-        cuotaInicial != null ? montoTotal : (montoTotal + cuotaInicial!),
+        cuotaInicial != null ? montoPagar : (montoPagar + cuotaInicial!),
     fecha: DateTime.now(),
     proyecto: proyectos[numeroProyecto]!,
   );
