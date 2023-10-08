@@ -3,6 +3,7 @@ class Cotizacion {
   double precioMetroCuadrado;
   double? montoTotal;
   double cuotaInicial;
+  double mantenimiento;
   int tiempo;
   DateTime? fecha;
   String referencia;
@@ -11,6 +12,7 @@ class Cotizacion {
 
   Cotizacion({
     required this.superficie,
+    required this.mantenimiento,
     required this.precioMetroCuadrado,
     required this.referencia,
     required this.cuotaInicial,
@@ -26,6 +28,7 @@ class Cotizacion {
       superficie: json['superficie'],
       referencia: json['referencia'],
       proyecto: json['proyecto'],
+      mantenimiento: json['mantenimiento'],
       precioMetroCuadrado: json['precioMetroCuadrado'],
       fecha: DateTime.parse(json['fecha']),
       montoTotal: json['montoTotal'],
@@ -45,5 +48,6 @@ class Cotizacion {
         'fecha': fecha!.toIso8601String(),
         'proyecto': proyecto,
         'montoTotal': montoTotal,
+        'mantenimiento': mantenimiento,
       };
 }
