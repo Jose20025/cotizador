@@ -4,6 +4,7 @@ class InputForm extends StatelessWidget {
   final double width;
   final String label;
   final TextCapitalization? textCapitalization;
+  final String? Function(String?)? validator;
   final bool validate;
   final int? maxLength;
   final TextInputType? type;
@@ -15,6 +16,7 @@ class InputForm extends StatelessWidget {
     this.maxLength,
     this.onSave,
     this.textCapitalization,
+    this.validator,
     required this.validate,
     required this.width,
     required this.label,
@@ -25,15 +27,7 @@ class InputForm extends StatelessWidget {
     return SizedBox(
       width: width,
       child: TextFormField(
-        validator: validate
-            ? (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Obligatorio';
-                }
-
-                return null;
-              }
-            : null,
+        validator: validate ? validator : null,
         maxLength: maxLength ?? 15,
         keyboardType: type ?? TextInputType.text,
         textCapitalization: textCapitalization ?? TextCapitalization.none,

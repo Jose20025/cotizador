@@ -2,7 +2,7 @@ class Cotizacion {
   double superficie;
   double precioMetroCuadrado;
   double? montoTotal;
-  double? cuotaInicial;
+  double cuotaInicial;
   int tiempo;
   DateTime? fecha;
   String referencia;
@@ -13,7 +13,7 @@ class Cotizacion {
     required this.superficie,
     required this.precioMetroCuadrado,
     required this.referencia,
-    this.cuotaInicial,
+    required this.cuotaInicial,
     required this.fecha,
     required this.importeCuotas,
     required this.tiempo,

@@ -2,12 +2,10 @@ import '../models/cotizacion.dart';
 import 'proyectos.dart';
 
 Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
-    double? cuotaInicial, int tiempo, String referencia, int numeroProyecto) {
+    double cuotaInicial, int tiempo, String referencia, int numeroProyecto) {
   double montoTotal = superficie * precioMetroCuadrado;
 
-  if (cuotaInicial != null) {
-    montoTotal -= cuotaInicial;
-  }
+  montoTotal -= cuotaInicial;
 
   final mantenimiento = obtenerMontoMantenimiento(montoTotal, tiempo);
 
@@ -22,8 +20,7 @@ Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
     referencia: referencia,
     cuotaInicial: cuotaInicial,
     importeCuotas: importeCuotas,
-    montoTotal:
-        cuotaInicial != null ? montoPagar : (montoPagar + cuotaInicial!),
+    montoTotal: (montoPagar + cuotaInicial),
     fecha: DateTime.now(),
     proyecto: proyectos[numeroProyecto]!,
   );

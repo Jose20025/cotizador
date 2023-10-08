@@ -142,6 +142,13 @@ class _HomePageState extends State<HomePage> {
               children: [
                 InputForm(
                   validate: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Obligatorio';
+                    }
+
+                    return null;
+                  },
                   maxLength: 30,
                   width: MediaQuery.of(context).size.width - 45,
                   label: 'Nombre de Referencia',
@@ -156,6 +163,13 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     InputForm(
                       validate: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Obligatorio';
+                        }
+
+                        return null;
+                      },
                       width: 150,
                       label: 'Precio de m²',
                       maxLength: 10,
@@ -167,6 +181,13 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(width: 30),
                     InputForm(
                       validate: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Obligatorio';
+                        }
+
+                        return null;
+                      },
                       maxLength: 10,
                       width: 170,
                       label: 'Superficie de Lote (m²)',
@@ -182,7 +203,18 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InputForm(
-                      validate: false,
+                      validate: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Obligatorio';
+                        }
+
+                        if (double.parse(value) < 200) {
+                          return 'Minimo 200';
+                        }
+
+                        return null;
+                      },
                       width: 150,
                       label: 'Cuota Inicial',
                       type: TextInputType.number,
@@ -242,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                         final cotizacion = crearCotizacion(
                             precioMetroCuadrado!,
                             superficie!,
-                            cuotaInicial,
+                            cuotaInicial!,
                             tiempo!,
                             referencia!,
                             numeroProyecto!);
@@ -308,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                             final cotizacionAGuardar = crearCotizacion(
                                 precioMetroCuadrado!,
                                 superficie!,
-                                cuotaInicial,
+                                cuotaInicial!,
                                 tiempo!,
                                 referencia!,
                                 numeroProyecto!);
