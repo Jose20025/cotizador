@@ -12,6 +12,12 @@ class PDFGenerator {
   static Future<File> generatePDF({required Cotizacion cotizacion}) async {
     final pageTheme = await getPageTheme();
 
+    final logos = pw.MemoryImage(
+      (await rootBundle.load('assets/images/logos_mana_cartagena.jpeg'))
+          .buffer
+          .asUint8List(),
+    );
+
     final documentoPDF = pw.Document(
       title: 'Cotizacion para: ${cotizacion.referencia}',
       author: cotizacion.proyecto,
@@ -25,23 +31,31 @@ class PDFGenerator {
         //! HEADER
         header: (context) => pw.Container(
           width: double.infinity,
-          child: pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.end,
+          child: pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [
-              pw.Text(
-                'Oficina Central',
-                style:
-                    pw.TextStyle(fontSize: 25, fontWeight: pw.FontWeight.bold),
-              ),
-              pw.SizedBox(height: 15),
-              pw.Text(
-                'Av. Banzer Calle 3 #3655',
-                style: const pw.TextStyle(fontSize: 13),
-              ),
-              pw.SizedBox(height: 5),
-              pw.Text(
-                'Teléfono: 76656551',
-                style: const pw.TextStyle(fontSize: 13),
+              pw.Image(logos, width: 200),
+              pw.Container(
+                child: pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                  children: [
+                    pw.Text(
+                      'Oficina Central',
+                      style: pw.TextStyle(
+                          fontSize: 25, fontWeight: pw.FontWeight.bold),
+                    ),
+                    pw.SizedBox(height: 15),
+                    pw.Text(
+                      'Av. Banzer Calle 3 #3655',
+                      style: const pw.TextStyle(fontSize: 13),
+                    ),
+                    pw.SizedBox(height: 5),
+                    pw.Text(
+                      'Teléfono: 76656551',
+                      style: const pw.TextStyle(fontSize: 13),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -49,7 +63,7 @@ class PDFGenerator {
 
         //! BUILD
         build: (context) => [
-          pw.SizedBox(height: 30),
+          pw.SizedBox(height: 20),
           pw.Text('COTIZACIÓN',
               style:
                   pw.TextStyle(fontSize: 36, fontWeight: pw.FontWeight.bold)),
@@ -157,6 +171,43 @@ class PDFGenerator {
             ),
           ),
           pw.SizedBox(height: 10),
+          pw.Container(
+            margin: const pw.EdgeInsets.only(left: 15, right: 35),
+            width: double.infinity,
+            child: pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(
+                  'Monto',
+                  style: const pw.TextStyle(fontSize: 15),
+                ),
+                pw.Text(
+                  NumberFormat.currency().format(
+                      cotizacion.precioMetroCuadrado * cotizacion.superficie),
+                  style: const pw.TextStyle(fontSize: 15),
+                )
+              ],
+            ),
+          ),
+          pw.SizedBox(height: 10),
+          pw.Container(
+            margin: const pw.EdgeInsets.only(left: 15, right: 35),
+            width: double.infinity,
+            child: pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(
+                  'Mantenimiento',
+                  style: const pw.TextStyle(fontSize: 15),
+                ),
+                pw.Text(
+                  NumberFormat.currency().format(cotizacion.mantenimiento),
+                  style: const pw.TextStyle(fontSize: 15),
+                )
+              ],
+            ),
+          ),
+          pw.SizedBox(height: 10),
           crearDivisor(),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15),
@@ -184,29 +235,27 @@ class PDFGenerator {
               ],
             ),
           ),
-          cotizacion.cuotaInicial != null
-              ? pw.Container(
-                  margin: const pw.EdgeInsets.only(left: 15, right: 20),
-                  width: double.infinity,
-                  child: pw.Row(
-                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                    children: [
-                      pw.Text(
-                        'Cuota Inicial',
-                        style: const pw.TextStyle(fontSize: 15),
-                      ),
-                      pw.Text(
-                        NumberFormat.currency().format(cotizacion.cuotaInicial),
-                        style: const pw.TextStyle(fontSize: 15),
-                      )
-                    ],
-                  ),
-                )
-              : pw.SizedBox(),
           pw.SizedBox(height: 10),
           pw.Container(
             margin: const pw.EdgeInsets.only(left: 15, right: 20),
             width: double.infinity,
+            child: pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text(
+                  'Cuota Inicial',
+                  style: const pw.TextStyle(fontSize: 15),
+                ),
+                pw.Text(
+                  NumberFormat.currency().format(cotizacion.cuotaInicial),
+                  style: const pw.TextStyle(fontSize: 15),
+                )
+              ],
+            ),
+          ),
+          pw.SizedBox(height: 10),
+          pw.Container(
+            margin: const pw.EdgeInsets.only(left: 15, right: 20),
             child: pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
@@ -236,24 +285,25 @@ class PDFGenerator {
             children: [
               pw.Spacer(flex: 4),
               pw.Expanded(
-                flex: 6,
-                child: pw.Row(
-                  children: [
-                    pw.SizedBox(width: 15),
-                    pw.Text(
-                      'Monto Total',
-                      style: pw.TextStyle(
-                          fontSize: 18, fontWeight: pw.FontWeight.bold),
+                  flex: 6,
+                  child: pw.Container(
+                    margin: const pw.EdgeInsets.symmetric(horizontal: 15),
+                    child: pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          'Monto Total',
+                          style: pw.TextStyle(
+                              fontSize: 18, fontWeight: pw.FontWeight.bold),
+                        ),
+                        pw.Text(
+                          NumberFormat.currency().format(cotizacion.montoTotal),
+                          style: pw.TextStyle(
+                              fontSize: 18, fontWeight: pw.FontWeight.bold),
+                        ),
+                      ],
                     ),
-                    pw.SizedBox(width: 30),
-                    pw.Text(
-                      NumberFormat.currency().format(cotizacion.montoTotal),
-                      style: pw.TextStyle(
-                          fontSize: 18, fontWeight: pw.FontWeight.bold),
-                    ),
-                  ],
-                ),
-              )
+                  ))
             ],
           )
         ],
@@ -292,7 +342,7 @@ class PDFGenerator {
       theme: pw.ThemeData(
           defaultTextStyle: pw.TextStyle(font: ttfLight, fontBold: ttfBold)),
       buildBackground: (context) => pw.FullPage(
-        ignoreMargins: true,
+        ignoreMargins: false,
         child: pw.Watermark(
           angle: 20,
           child: pw.Opacity(
