@@ -114,26 +114,31 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 10),
           const Divider(),
           const SizedBox(height: 10),
-          DropdownMenu(
-            onSelected: (value) {
-              numeroProyecto = value;
-            },
-            label: const Text('Proyecto'),
+          SizedBox(
             width: MediaQuery.of(context).size.width - 45,
-            trailingIcon: const Icon(Icons.add_chart),
-            // TODO Hacerlo scrollable
-            dropdownMenuEntries: const [
-              // TODO automatizar esto
-
-              DropdownMenuEntry(value: 0, label: 'Cartagena 1'),
-              DropdownMenuEntry(value: 1, label: 'Cartagena 2'),
-              DropdownMenuEntry(value: 2, label: 'Mana 1'),
-              DropdownMenuEntry(value: 3, label: 'Mana 2'),
-              DropdownMenuEntry(value: 4, label: 'Mana 3'),
-              DropdownMenuEntry(value: 5, label: 'Mana 4'),
-              DropdownMenuEntry(value: 6, label: 'Mana 5'),
-              DropdownMenuEntry(value: 7, label: 'Mana 6'),
-            ],
+            child: SingleChildScrollView(
+                child: DropdownButtonFormField<int>(
+              value: numeroProyecto,
+              onChanged: (newvalue) {
+                setState(() {
+                  numeroProyecto = newvalue;
+                });
+              },
+              hint: const Text('Proyecto'),
+              icon: const Icon(Icons.add_chart),
+              decoration: const InputDecoration(border: OutlineInputBorder()),
+              items: const [
+                // TODO automatizar esto
+                DropdownMenuItem<int>(value: 0, child: Text('Cartagena 1')),
+                DropdownMenuItem<int>(value: 1, child: Text('Cartagena 2')),
+                DropdownMenuItem<int>(value: 2, child: Text('Mana 1')),
+                DropdownMenuItem<int>(value: 3, child: Text('Mana 2')),
+                DropdownMenuItem<int>(value: 4, child: Text('Mana 3')),
+                DropdownMenuItem<int>(value: 5, child: Text('Mana 4')),
+                DropdownMenuItem<int>(value: 6, child: Text('Mana 5')),
+                DropdownMenuItem<int>(value: 7, child: Text('Mana 6')),
+              ],
+            )),
           ),
           const SizedBox(height: 15),
           Form(
@@ -335,6 +340,7 @@ class _HomePageState extends State<HomePage> {
                             _formKey.currentState!.save();
                             _formKey.currentState!.reset();
                             FocusScope.of(context).unfocus();
+
                             // TODO que se borre tambien el dropdown
 
                             final cotizacionAGuardar = crearCotizacion(
@@ -344,6 +350,10 @@ class _HomePageState extends State<HomePage> {
                                 tiempo!,
                                 referencia!,
                                 numeroProyecto!);
+
+                            setState(() {
+                              numeroProyecto = null;
+                            });
 
                             cotizaciones.add(cotizacionAGuardar);
 
@@ -372,6 +382,9 @@ class _HomePageState extends State<HomePage> {
                       child: ElevatedButton(
                         onPressed: () {
                           _formKey.currentState!.reset();
+                          setState(() {
+                            numeroProyecto = null;
+                          });
                         },
                         style: const ButtonStyle(
                             elevation: MaterialStatePropertyAll(6),
