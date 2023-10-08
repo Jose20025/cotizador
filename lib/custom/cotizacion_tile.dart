@@ -65,7 +65,8 @@ class CotizacionCard extends StatelessWidget {
               ),
               MiniCard(
                 title: 'Superficie del Lote',
-                subtitle: NumberFormat.currency().format(cotizacion.superficie),
+                subtitle:
+                    '${NumberFormat.decimalPatternDigits().format(cotizacion.superficie)} m²',
               ),
               MiniCard(
                 title: 'Precio del m²',

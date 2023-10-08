@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../custom/input_form.dart';
 import '../models/cotizacion.dart';
+import '../utils/cotizaciones.dart';
 import '../utils/proyectos.dart';
 import 'cotizacion_page.dart';
 import 'historial_page.dart';
@@ -39,39 +40,6 @@ class _HomePageState extends State<HomePage> {
   int? tiempo;
   String? referencia;
   int? numeroProyecto;
-
-  //* METODOS
-
-  Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
-      double? cuotaInicial, int tiempo, String referencia, int numeroProyecto) {
-    double montoTotal = superficie * precioMetroCuadrado;
-
-    if (cuotaInicial != null) {
-      montoTotal -= cuotaInicial;
-    }
-
-    final mantenimiento = obtenerMontoMantenimiento(montoTotal);
-
-    final montoPagar = (montoTotal + mantenimiento);
-
-    final importeCuotas = montoPagar / tiempo;
-
-    return Cotizacion(
-      superficie: superficie,
-      precioMetroCuadrado: precioMetroCuadrado,
-      tiempo: tiempo,
-      referencia: referencia,
-      cuotaInicial: cuotaInicial,
-      importeCuotas: importeCuotas,
-      montoTotal: montoTotal,
-      fecha: DateTime.now(),
-      proyecto: proyectos[numeroProyecto]!,
-    );
-  }
-
-  double obtenerMontoMantenimiento(double monto) {
-    return monto * 8 / 100 * 10;
-  }
 
   void obtenerCotizaciones() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -174,6 +142,13 @@ class _HomePageState extends State<HomePage> {
               children: [
                 InputForm(
                   validate: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Obligatorio';
+                    }
+
+                    return null;
+                  },
                   maxLength: 30,
                   width: MediaQuery.of(context).size.width - 45,
                   label: 'Nombre de Referencia',
@@ -188,6 +163,13 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     InputForm(
                       validate: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Obligatorio';
+                        }
+
+                        return null;
+                      },
                       width: 150,
                       label: 'Precio de m²',
                       maxLength: 10,
@@ -199,6 +181,13 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(width: 30),
                     InputForm(
                       validate: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Obligatorio';
+                        }
+
+                        return null;
+                      },
                       maxLength: 10,
                       width: 170,
                       label: 'Superficie de Lote (m²)',
@@ -214,7 +203,18 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InputForm(
-                      validate: false,
+                      validate: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Obligatorio';
+                        }
+
+                        if (double.parse(value) < 200) {
+                          return 'Minimo 200';
+                        }
+
+                        return null;
+                      },
                       width: 150,
                       label: 'Cuota Inicial',
                       type: TextInputType.number,
@@ -274,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                         final cotizacion = crearCotizacion(
                             precioMetroCuadrado!,
                             superficie!,
-                            cuotaInicial,
+                            cuotaInicial!,
                             tiempo!,
                             referencia!,
                             numeroProyecto!);
@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                             final cotizacionAGuardar = crearCotizacion(
                                 precioMetroCuadrado!,
                                 superficie!,
-                                cuotaInicial,
+                                cuotaInicial!,
                                 tiempo!,
                                 referencia!,
                                 numeroProyecto!);
