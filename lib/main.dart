@@ -65,13 +65,13 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        fontFamily: 'Open Sans',
+        fontFamily: 'Poppins',
         colorSchemeSeed: Colors.green,
         // brightness: Brightness.dark,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        fontFamily: 'Open Sans',
+        fontFamily: 'Poppins',
         colorSchemeSeed: Colors.green,
         brightness: Brightness.dark,
       ),
