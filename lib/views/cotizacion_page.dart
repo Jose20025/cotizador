@@ -1,4 +1,5 @@
 import 'package:open_file/open_file.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../custom/custom_card.dart';
 import '../models/cotizacion.dart';
@@ -21,8 +22,13 @@ class CotizacionPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
-            final archivo =
-                await PDFGenerator.generatePDF(cotizacion: cotizacion);
+            final prefs = await SharedPreferences.getInstance();
+            final asesorFromPrefs = prefs.getString('asesor');
+
+            final archivo = await PDFGenerator.generatePDF(
+              cotizacion: cotizacion,
+              asesor: asesorFromPrefs!,
+            );
 
             await OpenFile.open(archivo.path);
           },

@@ -9,7 +9,8 @@ import '../models/cotizacion.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PDFGenerator {
-  static Future<File> generatePDF({required Cotizacion cotizacion}) async {
+  static Future<File> generatePDF(
+      {required Cotizacion cotizacion, required String asesor}) async {
     final pageTheme = await getPageTheme();
 
     final logos = pw.MemoryImage(
