@@ -24,8 +24,8 @@ class _SplashPageState extends State<SplashPage> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          await guardarNombreAsesor();
+        onPressed: () {
+          guardarNombreAsesor();
 
           Navigator.pushReplacement(
             context,
