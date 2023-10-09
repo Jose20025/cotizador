@@ -65,20 +65,38 @@ class PDFGenerator {
         //! BUILD
         build: (context) => [
           pw.SizedBox(height: 20),
-          pw.Container(
-            padding: const pw.EdgeInsets.all(10),
-            decoration: pw.BoxDecoration(
-              borderRadius: pw.BorderRadius.circular(10),
-              color: PdfColors.lightGreen,
-            ),
-            child: pw.Text(
-              'COTIZACIÓN',
-              style: pw.TextStyle(
-                fontSize: 36,
-                fontWeight: pw.FontWeight.bold,
-                color: PdfColors.white,
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: pw.CrossAxisAlignment.end,
+            children: [
+              pw.Container(
+                padding:
+                    const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: pw.BoxDecoration(
+                  borderRadius: pw.BorderRadius.circular(10),
+                  color: PdfColors.lightGreen,
+                ),
+                child: pw.Text(
+                  'COTIZACIÓN',
+                  style: pw.TextStyle(
+                    fontSize: 36,
+                    fontWeight: pw.FontWeight.bold,
+                    color: PdfColors.white,
+                  ),
+                ),
               ),
-            ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text(
+                    'Asesor: ',
+                    style: pw.TextStyle(
+                        fontWeight: pw.FontWeight.bold, fontSize: 15),
+                  ),
+                  pw.Text(asesor, style: const pw.TextStyle(fontSize: 15))
+                ],
+              ),
+            ],
           ),
           pw.Divider(),
           pw.Container(
