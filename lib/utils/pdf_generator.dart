@@ -264,7 +264,7 @@ class PDFGenerator {
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(
-                  'Monto sin Cuota Inicial',
+                  'Saldo a Financiar',
                   style: const pw.TextStyle(fontSize: 16),
                 ),
                 pw.Text(
