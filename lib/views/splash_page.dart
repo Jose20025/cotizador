@@ -24,8 +24,8 @@ class _SplashPageState extends State<SplashPage> {
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          guardarNombreAsesor();
+        onPressed: () async {
+          await guardarNombreAsesor();
 
           Navigator.pushReplacement(
             context,
@@ -68,6 +68,6 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> guardarNombreAsesor() async {
     final prefs = await SharedPreferences.getInstance();
 
-    prefs.setString('asesor', _nombreAsesorController.value.text);
+    await prefs.setString('asesor', _nombreAsesorController.value.text);
   }
 }

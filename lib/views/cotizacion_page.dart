@@ -1,5 +1,4 @@
 import 'package:open_file/open_file.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../custom/custom_card.dart';
 import '../models/cotizacion.dart';
@@ -10,8 +9,10 @@ import '../utils/pdf_generator.dart';
 
 class CotizacionPage extends StatelessWidget {
   final Cotizacion cotizacion;
+  final String asesor;
 
-  const CotizacionPage({super.key, required this.cotizacion});
+  const CotizacionPage(
+      {super.key, required this.cotizacion, required this.asesor});
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +23,9 @@ class CotizacionPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
-            final prefs = await SharedPreferences.getInstance();
-            final asesorFromPrefs = prefs.getString('asesor');
-
             final archivo = await PDFGenerator.generatePDF(
               cotizacion: cotizacion,
-              asesor: asesorFromPrefs!,
+              asesor: asesor,
             );
 
             await OpenFile.open(archivo.path);
@@ -46,6 +44,11 @@ class CotizacionPage extends StatelessWidget {
           child: Column(
             children: [
               CustomCard(
+                title: 'Asesor',
+                subtitle: asesor,
+                icon: Icons.monetization_on_outlined,
+              ),
+              CustomCard(
                 title: 'Proyecto',
                 subtitle: cotizacion.proyecto,
                 icon: Icons.monetization_on_outlined,
@@ -57,14 +60,9 @@ class CotizacionPage extends StatelessWidget {
                 icon: Icons.monetization_on_outlined,
               ),
               CustomCard(
-                icon: Icons.monetization_on_outlined,
-                title: 'Precio por m²',
-                subtitle: NumberFormat.currency()
-                    .format(cotizacion.precioMetroCuadrado),
-              ),
-              CustomCard(
                 title: 'Monto Total',
-                subtitle: NumberFormat.currency().format(cotizacion.montoTotal),
+                subtitle: NumberFormat.currency()
+                    .format(cotizacion.montoTotal! + cotizacion.mantenimiento),
                 icon: Icons.monetization_on_outlined,
               ),
               CustomCard(

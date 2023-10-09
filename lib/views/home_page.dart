@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     obtenerCotizaciones();
+    obtenerAsesor();
   }
 
   @override
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   int? tiempo;
   String? referencia;
   int? numeroProyecto;
+  String? asesor;
 
   void obtenerCotizaciones() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -51,6 +53,15 @@ class _HomePageState extends State<HomePage> {
     for (var elemento in jsonList) {
       cotizaciones.add(Cotizacion.fromJson(elemento));
     }
+  }
+
+  void obtenerAsesor() async {
+    final prefs = await SharedPreferences.getInstance();
+    final asesorFromPrefs = prefs.getString('asesor');
+
+    setState(() {
+      asesor = asesorFromPrefs!;
+    });
   }
 
   void guardarCotizaciones() async {
@@ -286,8 +297,10 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                CotizacionPage(cotizacion: cotizacion),
+                            builder: (context) => CotizacionPage(
+                              cotizacion: cotizacion,
+                              asesor: asesor!,
+                            ),
                           ),
                         );
                       }
