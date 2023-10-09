@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/cotizacion.dart';
 import '../utils/pdf_generator.dart';
@@ -84,8 +85,13 @@ class CotizacionCard extends StatelessWidget {
                       surfaceTintColor:
                           MaterialStatePropertyAll(Colors.transparent)),
                   onPressed: () async {
-                    final archivo =
-                        await PDFGenerator.generatePDF(cotizacion: cotizacion);
+                    final prefs = await SharedPreferences.getInstance();
+                    final asesorFromPrefs = prefs.getString('asesor');
+
+                    final archivo = await PDFGenerator.generatePDF(
+                      cotizacion: cotizacion,
+                      asesor: asesorFromPrefs!,
+                    );
 
                     await OpenFile.open(archivo.path);
                   },

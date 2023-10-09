@@ -1,14 +1,43 @@
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/number_symbols.dart';
 import 'package:intl/number_symbols_data.dart';
 
+import 'views/splash_page.dart';
+
 void main() => runApp(const MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String? nombreAsesor;
+
+  @override
+  void initState() {
+    super.initState();
+    comprobarAsesor();
+  }
+
+  void comprobarAsesor() async {
+    final prefs = await SharedPreferences.getInstance();
+    final asesorFromPrefs = prefs.getString('asesor');
+
+    if (asesorFromPrefs == null) {
+      return;
+    }
+
+    setState(() {
+      nombreAsesor = asesorFromPrefs;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +76,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       title: 'Cotizador de Cuotas',
-      home: const HomePage(),
+      home: nombreAsesor != null ? const HomePage() : const SplashPage(),
     );
   }
 }
