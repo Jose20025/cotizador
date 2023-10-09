@@ -34,7 +34,9 @@ class InputForm extends StatelessWidget {
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 18),
         decoration: InputDecoration(
-            label: Text(label),
+            label: Center(
+              child: Text(label),
+            ),
             counter: const SizedBox(),
             filled: true,
             border: const OutlineInputBorder()),
