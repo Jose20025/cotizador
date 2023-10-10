@@ -5,15 +5,15 @@ Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
     double cuotaInicial, int tiempo, String referencia, int numeroProyecto) {
   double montoTotal = superficie * precioMetroCuadrado;
 
-  if (cuotaInicial > montoTotal) {
-    throw Exception('La cuota inicial no debe ser mayor al monto del lote');
-  }
-
   montoTotal -= cuotaInicial;
 
   final mantenimiento = obtenerMontoMantenimiento(montoTotal, tiempo);
 
   final montoPagar = (montoTotal + mantenimiento);
+
+  if (cuotaInicial > montoPagar) {
+    throw Exception('La cuota inicial no debe ser mayor al monto del lote');
+  }
 
   final importeCuotas = montoPagar / tiempo;
 
