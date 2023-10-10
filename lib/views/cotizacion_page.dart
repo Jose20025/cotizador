@@ -1,6 +1,7 @@
 import 'package:open_file/open_file.dart';
 
 import '../custom/custom_card.dart';
+import '../models/asesor.dart';
 import '../models/cotizacion.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +10,7 @@ import '../utils/pdf_generator.dart';
 
 class CotizacionPage extends StatelessWidget {
   final Cotizacion cotizacion;
-  final String asesor;
+  final Asesor asesor;
 
   const CotizacionPage(
       {super.key, required this.cotizacion, required this.asesor});
@@ -45,7 +46,7 @@ class CotizacionPage extends StatelessWidget {
             children: [
               CustomCard(
                 title: 'Asesor',
-                subtitle: asesor,
+                subtitle: asesor.name,
                 icon: Icons.monetization_on_outlined,
               ),
               CustomCard(

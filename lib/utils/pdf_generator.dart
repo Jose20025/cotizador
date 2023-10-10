@@ -5,12 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 
+import '../models/asesor.dart';
 import '../models/cotizacion.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PDFGenerator {
   static Future<File> generatePDF(
-      {required Cotizacion cotizacion, required String asesor}) async {
+      {required Cotizacion cotizacion, required Asesor asesor}) async {
     final pageTheme = await getPageTheme();
 
     final logos = pw.MemoryImage(
@@ -95,7 +96,7 @@ class PDFGenerator {
                     style: pw.TextStyle(
                         fontWeight: pw.FontWeight.bold, fontSize: 15),
                   ),
-                  pw.Text(asesor, style: const pw.TextStyle(fontSize: 15))
+                  pw.Text(asesor.name, style: const pw.TextStyle(fontSize: 15))
                 ],
               ),
             ],
