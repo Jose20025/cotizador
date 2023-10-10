@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/asesor.dart';
 import '../models/cotizacion.dart';
 import '../utils/pdf_generator.dart';
 import 'mini_card.dart';
@@ -88,9 +91,12 @@ class CotizacionCard extends StatelessWidget {
                     final prefs = await SharedPreferences.getInstance();
                     final asesorFromPrefs = prefs.getString('asesor');
 
+                    final Asesor asesor =
+                        Asesor.fromJson(jsonDecode(asesorFromPrefs!));
+
                     final archivo = await PDFGenerator.generatePDF(
                       cotizacion: cotizacion,
-                      asesor: asesorFromPrefs!,
+                      asesor: asesor,
                     );
 
                     await OpenFile.open(archivo.path);

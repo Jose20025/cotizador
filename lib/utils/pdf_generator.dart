@@ -5,12 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 
+import '../models/asesor.dart';
 import '../models/cotizacion.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PDFGenerator {
   static Future<File> generatePDF(
-      {required Cotizacion cotizacion, required String asesor}) async {
+      {required Cotizacion cotizacion, required Asesor asesor}) async {
     final pageTheme = await getPageTheme();
 
     final logos = pw.MemoryImage(
@@ -46,14 +47,32 @@ class PDFGenerator {
                           fontSize: 25, fontWeight: pw.FontWeight.bold),
                     ),
                     pw.SizedBox(height: 15),
-                    pw.Text(
-                      'Av. Banzer Calle 3 #3655',
-                      style: const pw.TextStyle(fontSize: 13),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          'Asesor: ',
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold, fontSize: 15),
+                        ),
+                        pw.Text(asesor.name,
+                            style: const pw.TextStyle(fontSize: 15))
+                      ],
                     ),
                     pw.SizedBox(height: 5),
-                    pw.Text(
-                      'Teléfono: 76656551',
-                      style: const pw.TextStyle(fontSize: 13),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          'Teléfono: ',
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold, fontSize: 15),
+                        ),
+                        pw.Text(
+                          asesor.number,
+                          style: const pw.TextStyle(fontSize: 15),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -65,20 +84,27 @@ class PDFGenerator {
         //! BUILD
         build: (context) => [
           pw.SizedBox(height: 20),
-          pw.Container(
-            padding: const pw.EdgeInsets.all(10),
-            decoration: pw.BoxDecoration(
-              borderRadius: pw.BorderRadius.circular(10),
-              color: PdfColors.lightGreen,
-            ),
-            child: pw.Text(
-              'COTIZACIÓN',
-              style: pw.TextStyle(
-                fontSize: 36,
-                fontWeight: pw.FontWeight.bold,
-                color: PdfColors.white,
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: pw.CrossAxisAlignment.end,
+            children: [
+              pw.Container(
+                padding:
+                    const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                decoration: pw.BoxDecoration(
+                  borderRadius: pw.BorderRadius.circular(10),
+                  color: PdfColors.lightGreen,
+                ),
+                child: pw.Text(
+                  'COTIZACIÓN',
+                  style: pw.TextStyle(
+                    fontSize: 36,
+                    fontWeight: pw.FontWeight.bold,
+                    color: PdfColors.white,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           pw.Divider(),
           pw.Container(
@@ -246,7 +272,7 @@ class PDFGenerator {
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
                 pw.Text(
-                  'Monto sin Cuota Inicial',
+                  'Saldo a Financiar',
                   style: const pw.TextStyle(fontSize: 16),
                 ),
                 pw.Text(

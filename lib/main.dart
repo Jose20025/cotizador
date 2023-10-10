@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'models/asesor.dart';
 import 'views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String? nombreAsesor;
+  Asesor? asesor;
 
   @override
   void initState() {
@@ -30,12 +33,10 @@ class _MyAppState extends State<MyApp> {
     final prefs = await SharedPreferences.getInstance();
     final asesorFromPrefs = prefs.getString('asesor');
 
-    if (asesorFromPrefs == null) {
-      return;
-    }
+    if (asesorFromPrefs == null) return;
 
     setState(() {
-      nombreAsesor = asesorFromPrefs;
+      asesor = Asesor.fromJson(jsonDecode(asesorFromPrefs));
     });
   }
 
@@ -65,18 +66,18 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        fontFamily: 'Open Sans',
+        fontFamily: 'Poppins',
         colorSchemeSeed: Colors.green,
         // brightness: Brightness.dark,
       ),
       darkTheme: ThemeData(
         useMaterial3: true,
-        fontFamily: 'Open Sans',
+        fontFamily: 'Poppins',
         colorSchemeSeed: Colors.green,
         brightness: Brightness.dark,
       ),
       title: 'Cotizador de Cuotas',
-      home: nombreAsesor != null ? const HomePage() : const SplashPage(),
+      home: asesor != null ? const HomePage() : const SplashPage(),
     );
   }
 }

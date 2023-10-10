@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import '../custom/input_form.dart';
+import '../models/asesor.dart';
 import '../models/cotizacion.dart';
 import '../utils/cotizaciones.dart';
 import 'cotizacion_page.dart';
@@ -40,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   int? tiempo;
   String? referencia;
   int? numeroProyecto;
-  String? asesor;
+  Asesor? asesor;
 
   void obtenerCotizaciones() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -60,7 +61,7 @@ class _HomePageState extends State<HomePage> {
     final asesorFromPrefs = prefs.getString('asesor');
 
     setState(() {
-      asesor = asesorFromPrefs!;
+      asesor = Asesor.fromJson(jsonDecode(asesorFromPrefs!));
     });
   }
 
