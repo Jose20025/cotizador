@@ -287,23 +287,44 @@ class _HomePageState extends State<HomePage> {
                         _formKey.currentState!.save();
                         FocusScope.of(context).unfocus();
 
-                        final cotizacion = crearCotizacion(
-                            precioMetroCuadrado!,
-                            superficie!,
-                            cuotaInicial!,
-                            tiempo!,
-                            referencia!,
-                            numeroProyecto!);
+                        try {
+                          final cotizacion = crearCotizacion(
+                              precioMetroCuadrado!,
+                              superficie!,
+                              cuotaInicial!,
+                              tiempo!,
+                              referencia!,
+                              numeroProyecto!);
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CotizacionPage(
-                              cotizacion: cotizacion,
-                              asesor: asesor!,
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CotizacionPage(
+                                cotizacion: cotizacion,
+                                asesor: asesor!,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } on Exception {
+                          await showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              elevation: 5,
+                              title: const Text('Error'),
+                              icon: const Icon(Icons.error),
+                              content: const Text(
+                                  'La cuota inicial no debe ser mayor al monto del lote'),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Ok'))
+                              ],
+                            ),
+                          );
+                        }
                       }
                     },
                     child: Text('Cotizar',
@@ -332,6 +353,7 @@ class _HomePageState extends State<HomePage> {
                               context: context,
                               barrierDismissible: false,
                               builder: (context) => AlertDialog(
+                                elevation: 5,
                                 title: const Text('Error'),
                                 content: const Text(
                                     'Debe de seleccionar un proyecto'),
@@ -351,26 +373,49 @@ class _HomePageState extends State<HomePage> {
 
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
-                            _formKey.currentState!.reset();
-                            FocusScope.of(context).unfocus();
 
-                            final cotizacionAGuardar = crearCotizacion(
-                                precioMetroCuadrado!,
-                                superficie!,
-                                cuotaInicial!,
-                                tiempo!,
-                                referencia!,
-                                numeroProyecto!);
+                            try {
+                              final cotizacionAGuardar = crearCotizacion(
+                                  precioMetroCuadrado!,
+                                  superficie!,
+                                  cuotaInicial!,
+                                  tiempo!,
+                                  referencia!,
+                                  numeroProyecto!);
 
-                            setState(() {
-                              numeroProyecto = null;
-                            });
+                              setState(() {
+                                numeroProyecto = null;
+                              });
 
-                            cotizaciones.add(cotizacionAGuardar);
+                              cotizaciones.add(cotizacionAGuardar);
 
-                            guardarCotizaciones();
+                              guardarCotizaciones();
 
-                            showConfirmation(context);
+                              showSnackBar(context,
+                                  'Se ha guardado la cotización con éxito en el historial');
+
+                              _formKey.currentState!.reset();
+                              FocusScope.of(context).unfocus();
+                            } on Exception {
+                              await showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  elevation: 5,
+                                  title: const Text('Error'),
+                                  icon: const Icon(Icons.error),
+                                  content: const Text(
+                                      'La cuota inicial no debe ser mayor al monto del lote'),
+                                  actions: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Ok'))
+                                  ],
+                                ),
+                              );
+                            }
                           }
                         },
                         style: const ButtonStyle(
@@ -430,23 +475,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void showConfirmation(BuildContext context) {
+  void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Center(
           child: Text(
-            'Se ha guardado la cotización con éxito en el historial',
-            style: TextStyle(
+            message,
+            style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
         ),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
         backgroundColor: Colors.green,
         elevation: 0,
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         behavior: SnackBarBehavior.fixed,
       ),
     );
