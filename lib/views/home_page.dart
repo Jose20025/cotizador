@@ -241,6 +241,13 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(width: 30),
                     InputForm(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Obligatorio';
+                        }
+
+                        return null;
+                      },
                       validate: true,
                       width: 150,
                       label: 'Tiempo (meses)',
