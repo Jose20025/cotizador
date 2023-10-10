@@ -25,16 +25,15 @@ Cotizacion crearCotizacion(double precioMetroCuadrado, double superficie,
     throw EqualError('La cuota inicial es igual al monto total');
   }
 
+  if (cuotaInicial > montoTotal) {
+    throw HigherFirstPaymentError(
+        'La cuota inicial no debe ser mayor al monto del lote');
+  }
   montoTotal -= cuotaInicial;
 
   final mantenimiento = obtenerMontoMantenimiento(montoTotal, tiempo);
 
   final montoPagar = (montoTotal + mantenimiento);
-
-  if (cuotaInicial > (montoPagar + cuotaInicial)) {
-    throw HigherFirstPaymentError(
-        'La cuota inicial no debe ser mayor al monto del lote');
-  }
 
   final importeCuotas = montoPagar / tiempo;
 
