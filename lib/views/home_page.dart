@@ -305,7 +305,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           );
-                        } on Exception {
+                        } on HigherFirstPaymentError {
                           await showDialog(
                             barrierDismissible: false,
                             context: context,
@@ -314,7 +314,30 @@ class _HomePageState extends State<HomePage> {
                               title: const Text('Error'),
                               icon: const Icon(Icons.error),
                               content: const Text(
-                                  'La cuota inicial no debe ser mayor al monto del lote'),
+                                'La cuota inicial no debe ser mayor al monto del lote',
+                                textAlign: TextAlign.center,
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Ok'))
+                              ],
+                            ),
+                          );
+                        } on EqualError {
+                          await showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              elevation: 5,
+                              title: const Text('Error'),
+                              icon: const Icon(Icons.error),
+                              content: const Text(
+                                'La cuota inicial es igual al monto total del lote, no se pagará con cuotas',
+                                textAlign: TextAlign.center,
+                              ),
                               actions: [
                                 ElevatedButton(
                                     onPressed: () {
@@ -396,7 +419,7 @@ class _HomePageState extends State<HomePage> {
 
                               _formKey.currentState!.reset();
                               FocusScope.of(context).unfocus();
-                            } on Exception {
+                            } on HigherFirstPaymentError {
                               await showDialog(
                                 barrierDismissible: false,
                                 context: context,
@@ -405,7 +428,30 @@ class _HomePageState extends State<HomePage> {
                                   title: const Text('Error'),
                                   icon: const Icon(Icons.error),
                                   content: const Text(
-                                      'La cuota inicial no debe ser mayor al monto del lote'),
+                                    'La cuota inicial no debe ser mayor al monto del lote',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Ok'))
+                                  ],
+                                ),
+                              );
+                            } on EqualError {
+                              await showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  elevation: 5,
+                                  title: const Text('Error'),
+                                  icon: const Icon(Icons.error),
+                                  content: const Text(
+                                    'La cuota inicial es igual al monto total del lote, no se pagará con cuotas',
+                                    textAlign: TextAlign.center,
+                                  ),
                                   actions: [
                                     ElevatedButton(
                                         onPressed: () {
