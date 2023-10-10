@@ -47,16 +47,32 @@ class PDFGenerator {
                           fontSize: 25, fontWeight: pw.FontWeight.bold),
                     ),
                     pw.SizedBox(height: 15),
-                    //TODO Cambiar la dirección
-                    pw.Text(
-                      'Av. Banzer Calle 3 #3655',
-                      style: const pw.TextStyle(fontSize: 13),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          'Asesor: ',
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold, fontSize: 15),
+                        ),
+                        pw.Text(asesor.name,
+                            style: const pw.TextStyle(fontSize: 15))
+                      ],
                     ),
                     pw.SizedBox(height: 5),
-                    //TODO Cambiar el numero
-                    pw.Text(
-                      'Teléfono: 76656551',
-                      style: const pw.TextStyle(fontSize: 13),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          'Teléfono: ',
+                          style: pw.TextStyle(
+                              fontWeight: pw.FontWeight.bold, fontSize: 15),
+                        ),
+                        pw.Text(
+                          asesor.number,
+                          style: const pw.TextStyle(fontSize: 15),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -87,17 +103,6 @@ class PDFGenerator {
                     color: PdfColors.white,
                   ),
                 ),
-              ),
-              pw.Row(
-                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-                children: [
-                  pw.Text(
-                    'Asesor: ',
-                    style: pw.TextStyle(
-                        fontWeight: pw.FontWeight.bold, fontSize: 15),
-                  ),
-                  pw.Text(asesor.name, style: const pw.TextStyle(fontSize: 15))
-                ],
               ),
             ],
           ),
