@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     if (asesorFromPrefs == null) return;
 
     setState(() {
-      asesor = jsonDecode(asesorFromPrefs);
+      asesor = Asesor.fromJson(jsonDecode(asesorFromPrefs));
     });
   }
 

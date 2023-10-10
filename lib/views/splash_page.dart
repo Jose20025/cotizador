@@ -31,6 +31,7 @@ class _SplashPageState extends State<SplashPage> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           if (_key.currentState!.validate()) {
+            _key.currentState!.save();
             guardarAsesor();
 
             Navigator.pushReplacement(
@@ -71,6 +72,8 @@ class _SplashPageState extends State<SplashPage> {
 
                         return null;
                       },
+                      keyboardType: TextInputType.name,
+                      textCapitalization: TextCapitalization.words,
                       onSaved: (newValue) {
                         nombre = newValue;
                       },
@@ -85,11 +88,12 @@ class _SplashPageState extends State<SplashPage> {
                     child: TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Ingresa un nombre';
+                          return 'Ingresa un número';
                         }
 
                         return null;
                       },
+                      keyboardType: TextInputType.number,
                       onSaved: (newValue) {
                         number = newValue;
                       },

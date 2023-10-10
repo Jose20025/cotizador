@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
     final asesorFromPrefs = prefs.getString('asesor');
 
     setState(() {
-      asesor = jsonDecode(asesorFromPrefs!);
+      asesor = Asesor.fromJson(jsonDecode(asesorFromPrefs!));
     });
   }
 
