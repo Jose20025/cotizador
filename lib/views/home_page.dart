@@ -525,6 +525,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   AppBar appBar() {
+    TextEditingController controllerNombre = TextEditingController();
+    TextEditingController controllerTelefono = TextEditingController();
+
     return AppBar(
       title: const Text(
         'Cotizador de Cuotas',
@@ -535,86 +538,116 @@ class _HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: IconButton(
-              onPressed: () {
-                showModalBottomSheet(
+              onPressed: () async {
+                await showModalBottomSheet(
                   isScrollControlled: true,
                   context: context,
-                  builder: (context) {
-                    TextEditingController controllerNombre =
-                        TextEditingController(text: asesor!.name);
-                    TextEditingController controllerTelefono =
-                        TextEditingController(text: asesor!.number);
+                  builder: (context) => Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: SizedBox(
+                      height: 400,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 30),
+                            child: Text(
+                              'Perfil de Asesor',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(height: 25),
+                          Container(
+                            margin: const EdgeInsets.only(left: 25),
+                            child: const Text(
+                              'Nombre',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 25),
+                            child: TextFormField(
+                              controller: controllerNombre,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                hintText: asesor!.name,
+                              ),
+                              onChanged: (value) {
+                                controllerNombre.text = value;
+                              },
+                              onFieldSubmitted: (value) {
+                                controllerNombre.text = value;
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 25),
+                          Container(
+                            margin: const EdgeInsets.only(left: 25),
+                            child: const Text(
+                              'Teléfono',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 25),
+                            child: TextFormField(
+                              controller: controllerTelefono,
+                              keyboardType: TextInputType.number,
+                              maxLength: 8,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                counter: const Offstage(),
+                                hintText: asesor!.number,
+                              ),
+                              onChanged: (value) {
+                                controllerTelefono.text = value;
+                              },
+                              onFieldSubmitted: (value) {
+                                controllerTelefono.text = value;
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 25),
+                          Center(
+                            child: ElevatedButton(
+                              style: const ButtonStyle(
+                                elevation: MaterialStatePropertyAll(4),
+                              ),
+                              onPressed: () {
+                                final nombre = controllerNombre.value.text;
+                                final telefono = controllerTelefono.value.text;
 
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: SizedBox(
-                        height: 350,
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 30),
-                              child: Text(
-                                'Perfil de Asesor',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            const SizedBox(height: 25),
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 25),
-                              child: TextFormField(
-                                controller: controllerNombre,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  label: Text('Nombre de Asesor'),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 25),
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 25),
-                              child: TextFormField(
-                                controller: controllerTelefono,
-                                keyboardType: TextInputType.number,
-                                maxLength: 8,
-                                decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  counter: Offstage(),
-                                  label: Text('Teléfono'),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 25),
-                            Center(
-                              child: ElevatedButton(
-                                style: const ButtonStyle(
-                                  elevation: MaterialStatePropertyAll(4),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    asesor!.changeAll(
-                                      controllerNombre.value.text,
-                                      controllerTelefono.value.text,
-                                    );
-                                  });
+                                if (nombre.isEmpty && telefono.isEmpty) {
+                                } else if (nombre.isEmpty &&
+                                    telefono.isNotEmpty) {
+                                  asesor!.changeNumber(telefono);
+                                } else if (nombre.isNotEmpty &&
+                                    telefono.isEmpty) {
+                                  asesor!.changeName(nombre);
+                                } else {
+                                  asesor!.changeAll(nombre, telefono);
+                                }
 
-                                  guardarNuevoAsesor();
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text('Actualizar'),
-                              ),
+                                setState(() {});
+
+                                guardarNuevoAsesor();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Actualizar'),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
+                    ),
+                  ),
                 );
               },
               icon: const Icon(Icons.account_circle_outlined)),
