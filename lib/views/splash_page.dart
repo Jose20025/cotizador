@@ -97,8 +97,10 @@ class _SplashPageState extends State<SplashPage> {
                       onSaved: (newValue) {
                         number = newValue;
                       },
+                      maxLength: 8,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
+                        counter: Offstage(),
                         label: Text('Introduce tu número de teléfono'),
                       ),
                     ),
