@@ -518,6 +518,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void guardarNuevoAsesor() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('asesor', jsonEncode(asesor));
+  }
+
   AppBar appBar() {
     return AppBar(
       title: const Text(
@@ -525,6 +531,95 @@ class _HomePageState extends State<HomePage> {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
       ),
       centerTitle: true,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    TextEditingController controllerNombre =
+                        TextEditingController(text: asesor!.name);
+                    TextEditingController controllerTelefono =
+                        TextEditingController(text: asesor!.number);
+
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      child: SizedBox(
+                        height: 350,
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 30),
+                              child: Text(
+                                'Perfil de Asesor',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            const SizedBox(height: 25),
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 25),
+                              child: TextFormField(
+                                controller: controllerNombre,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  label: Text('Nombre de Asesor'),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 25),
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 25),
+                              child: TextFormField(
+                                controller: controllerTelefono,
+                                keyboardType: TextInputType.number,
+                                maxLength: 8,
+                                decoration: const InputDecoration(
+                                  border: OutlineInputBorder(),
+                                  counter: Offstage(),
+                                  label: Text('Teléfono'),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 25),
+                            Center(
+                              child: ElevatedButton(
+                                style: const ButtonStyle(
+                                  elevation: MaterialStatePropertyAll(4),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    asesor!.changeAll(
+                                      controllerNombre.value.text,
+                                      controllerTelefono.value.text,
+                                    );
+                                  });
+
+                                  guardarNuevoAsesor();
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Actualizar'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              icon: const Icon(Icons.account_circle_outlined)),
+        )
+      ],
     );
   }
 
