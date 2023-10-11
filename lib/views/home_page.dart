@@ -518,13 +518,141 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void guardarNuevoAsesor() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('asesor', jsonEncode(asesor));
+  }
+
   AppBar appBar() {
+    TextEditingController controllerNombre = TextEditingController();
+    TextEditingController controllerTelefono = TextEditingController();
+
     return AppBar(
       title: const Text(
         'Cotizador de Cuotas',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
       ),
       centerTitle: true,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: IconButton(
+              onPressed: () async {
+                await showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: SizedBox(
+                      height: 400,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 30),
+                            child: Text(
+                              'Perfil de Asesor',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(height: 25),
+                          Container(
+                            margin: const EdgeInsets.only(left: 25),
+                            child: const Text(
+                              'Nombre',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 25),
+                            child: TextFormField(
+                              controller: controllerNombre,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                hintText: asesor!.name,
+                              ),
+                              onChanged: (value) {
+                                controllerNombre.text = value;
+                              },
+                              onFieldSubmitted: (value) {
+                                controllerNombre.text = value;
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 25),
+                          Container(
+                            margin: const EdgeInsets.only(left: 25),
+                            child: const Text(
+                              'Teléfono',
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 25),
+                            child: TextFormField(
+                              controller: controllerTelefono,
+                              keyboardType: TextInputType.number,
+                              maxLength: 8,
+                              decoration: InputDecoration(
+                                border: const OutlineInputBorder(),
+                                counter: const Offstage(),
+                                hintText: asesor!.number,
+                              ),
+                              onChanged: (value) {
+                                controllerTelefono.text = value;
+                              },
+                              onFieldSubmitted: (value) {
+                                controllerTelefono.text = value;
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 25),
+                          Center(
+                            child: ElevatedButton(
+                              style: const ButtonStyle(
+                                elevation: MaterialStatePropertyAll(4),
+                              ),
+                              onPressed: () {
+                                final nombre = controllerNombre.value.text;
+                                final telefono = controllerTelefono.value.text;
+
+                                if (nombre.isEmpty && telefono.isEmpty) {
+                                } else if (nombre.isEmpty &&
+                                    telefono.isNotEmpty) {
+                                  asesor!.changeNumber(telefono);
+                                } else if (nombre.isNotEmpty &&
+                                    telefono.isEmpty) {
+                                  asesor!.changeName(nombre);
+                                } else {
+                                  asesor!.changeAll(nombre, telefono);
+                                }
+
+                                setState(() {});
+
+                                guardarNuevoAsesor();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Actualizar'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.account_circle_outlined)),
+        )
+      ],
     );
   }
 
