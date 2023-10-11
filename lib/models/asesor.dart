@@ -1,6 +1,6 @@
 class Asesor {
-  final String name;
-  final String number;
+  String name;
+  String number;
 
   Asesor({required this.name, required this.number});
 
@@ -13,4 +13,17 @@ class Asesor {
         'name': name,
         'number': number,
       };
+
+  void changeName(String newName) {
+    name = newName;
+  }
+
+  void changeNumber(String newNumber) {
+    number = newNumber;
+  }
+
+  void changeAll(String newName, String newNumber) {
+    name = newName;
+    number = newNumber;
+  }
 }
