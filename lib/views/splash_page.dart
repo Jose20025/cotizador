@@ -100,7 +100,9 @@ class _SplashPageState extends State<SplashPage> {
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         label: Text('Introduce tu número de teléfono'),
+                        counter: Offstage(),
                       ),
+                      maxLength: 8,
                     ),
                   ),
                 ],
