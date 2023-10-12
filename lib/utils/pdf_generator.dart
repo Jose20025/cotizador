@@ -93,7 +93,7 @@ class PDFGenerator {
                     const pw.EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: pw.BoxDecoration(
                   borderRadius: pw.BorderRadius.circular(10),
-                  color: PdfColors.lightGreen,
+                  color: PdfColors.orange,
                 ),
                 child: pw.Text(
                   'COTIZACIÓN',
