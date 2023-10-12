@@ -5,7 +5,7 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       fontFamily: 'Poppins',
-      colorSchemeSeed: Colors.orange,
+      colorSchemeSeed: Colors.orange[900],
       // brightness: Brightness.dark,
     );
   }
