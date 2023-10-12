@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'config/theme/app_theme.dart';
 import 'models/asesor.dart';
 import 'views/home_page.dart';
 import 'package:flutter/material.dart';
@@ -64,18 +65,13 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: 'Poppins',
-        colorSchemeSeed: Colors.green,
-        // brightness: Brightness.dark,
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        fontFamily: 'Poppins',
-        colorSchemeSeed: Colors.green,
-        brightness: Brightness.dark,
-      ),
+      theme: AppTheme.getTheme(),
+      // darkTheme: ThemeData(
+      //   useMaterial3: true,
+      //   fontFamily: 'Poppins',
+      //   colorSchemeSeed: const Color(0xFFFFA600),
+      //   brightness: Brightness.dark,
+      // ),
       title: 'Cotizador de Cuotas',
       home: asesor != null ? const HomePage() : const SplashPage(),
     );
