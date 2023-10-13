@@ -62,8 +62,7 @@ class CotizacionPage extends StatelessWidget {
               ),
               CustomCard(
                 title: 'Monto Total',
-                subtitle: NumberFormat.currency()
-                    .format(cotizacion.montoTotal! + cotizacion.mantenimiento),
+                subtitle: NumberFormat.currency().format(cotizacion.montoTotal),
                 icon: Icons.monetization_on_outlined,
               ),
               CustomCard(
